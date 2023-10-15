@@ -9,7 +9,8 @@ import { ShipModule } from './ship/ship.module';
 import { Ship } from './ship/ship.entity';
 import { Position } from './position/position.entity';
 import { ScheduleModule } from '@nestjs/schedule';
-
+import { SocketModule } from './socket/socket.module';
+//===========================================================================================================
 
 @Module({
 	imports: [
@@ -33,6 +34,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 		ParserModule,
 		PositionModule,
 		ShipModule,
+		SocketModule,
 	],
 	controllers: [AppController],
 	providers: [AppService],

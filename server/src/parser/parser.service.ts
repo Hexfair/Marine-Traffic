@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Timeout } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import puppeteer from 'puppeteer-core';
 import * as cheerio from 'cheerio';
 import * as dayjs from 'dayjs'
 import * as customParseFormat from 'dayjs/plugin/customParseFormat';
 import * as utc from 'dayjs/plugin/utc';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Ship } from 'src/ship/ship.entity';
-import { Repository } from 'typeorm';
 import { PositionService } from 'src/position/position.service';
 import { ShipService } from 'src/ship/ship.service';
 //===========================================================================================================
@@ -20,13 +17,13 @@ const basicUrl = 'https://www.marinetraffic.com/en/data/?asset_type=vessels&colu
 @Injectable()
 export class ParserService {
 	constructor(
-		@InjectRepository(Ship) private readonly shipRepository: Repository<Ship>,
 		private readonly positionService: PositionService,
 		private readonly shipService: ShipService,
 	) { }
 
-	//@Timeout(5000)
-	async handleTimeout() {
+	@Cron('0 0 */2 * * *')
+	async handleCron() {
+		console.log('Время запуска парсера: ', dayjs().format('YYYY-MM-DD HH:mm'));
 
 		const allShipsData = await this.shipService.findAll();
 		const allShipsQueryMMSI = allShipsData.map((obj) => '&mmsi|eq|mmsi=' + obj.mmsi);
@@ -52,6 +49,7 @@ export class ParserService {
 			itemsIndex = itemsIndex + 1;
 			if (itemsIndex === queryItems.length) {
 				setTimeout(async function () {
+					console.log('Время окончания работы парсера: ', dayjs().format('YYYY-MM-DD HH:mm'));
 					clearInterval(timerId);
 					await browser.close();
 				}, 40000);

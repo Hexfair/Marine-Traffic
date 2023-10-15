@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ShipService } from 'src/ship/ship.service';
 import { Position } from './position.entity';
 import { Repository } from 'typeorm';
+//===========================================================================================================
 
 @Injectable()
 export class PositionService {
@@ -17,7 +18,7 @@ export class PositionService {
 	async create(createPositionDto: CreatePositionDto) {
 		const shipData = await this.shipService.findOnebyMMSI(createPositionDto.mmsi)
 		if (!shipData) {
-			throw new BadRequestException('Ошибка при получении данных. Возможно, вы указали не правильный номер MMSI');
+			throw new BadRequestException('Ошибка при получении данных. Возможно, вы указали неправильный номер MMSI');
 		}
 
 		const positionData = {
@@ -42,21 +43,22 @@ export class PositionService {
 		return shipData.at(-1);
 	}
 
-	/* Получение последних позиций всех кораблей */
+	/* Получение всех кораблей с их последними позициями */
 	async findLastAll() {
 		const allShipsData = await this.shipService.findAll();
 		const allShipsWithLastPosition = await Promise.all(
-			allShipsData.map(async (obj) => await this.findLastPosition(obj.mmsi))
-		)
-		return allShipsWithLastPosition;
+			allShipsData.map(async (obj) => await this.findLastPosition(obj.mmsi)));
+
+		return allShipsWithLastPosition.filter(obj => obj);
 	}
 
-	findOne(id: number) {
-		return `This action returns a #${id} position`;
-	}
-
-	update(id: number, updatePositionDto: UpdatePositionDto) {
-		return `This action updates a #${id} position`;
+	async update(mmsi: number) {
+		const positions = await this.positionRepository
+			.createQueryBuilder()
+			.update(Position)
+			.set({ isReaded: true })
+			.where("ship.mmsi = :mmsi", { mmsi })
+			.execute()
 	}
 
 	remove(id: number) {

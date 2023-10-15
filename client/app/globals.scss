@@ -1,0 +1,41 @@
+/* Обнуление */
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+body {
+	max-width: 100vw;
+	height: 100vh;
+	background: url("../public/main-bg.png") repeat;
+	padding: 10px;
+}
+
+a {
+	text-decoration: none;
+	list-style: none;
+}
+
+/* Colors */
+:root {
+	--primary: #3F51B5;
+	--primary-dark: #303F9F;
+	--primary-light: #C5CAE9;
+	--white: #FFFFFF;
+	--primary-text: #212121;
+	--secondary-text: #757575;
+	--accent: #448AFF;
+	--divider: #BDBDBD;
+	--qwe: #8e04ff;
+}
+
+.leaflet-container {
+	width: 100% !important;
+	height: 95vh !important;
+}
+
+.leaflet-bottom.leaflet-right {
+	display: none;
+}

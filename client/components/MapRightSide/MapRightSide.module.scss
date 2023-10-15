@@ -1,0 +1,14 @@
+.mapRightSide {
+	display: flex;
+	flex-direction: column;
+	max-height: 95vh;
+	overflow-y: scroll;
+}
+
+.shipItem {
+	background-color: white;
+}
+
+.newRecord {
+	background-color: rgb(214, 137, 137);
+}
