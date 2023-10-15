@@ -1,4 +1,4 @@
-import { Position } from 'src/position/entities/position.entity';
+import { Position } from 'src/position/position.entity';
 import {
 	Column,
 	CreateDateColumn,
@@ -12,17 +12,20 @@ export class Ship {
 	@PrimaryGeneratedColumn({ name: 'ship_id' })
 	id: number;
 
-	@Column()
+	@Column({ unique: true })
 	mmsi: number;
 
 	@Column()
-	shipName: string;
+	name: string;
 
 	@Column()
-	navalBase: string;
+	base: string;
+
+	@Column({ unique: true })
+	acronym: string;
 
 	@Column()
-	abbr: string;
+	type: string;
 
 	@OneToMany(() => Position, (position) => position.ship)
 	positions: Position[];

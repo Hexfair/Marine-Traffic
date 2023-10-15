@@ -12,10 +12,10 @@ export class PositionController {
 		return this.positionService.create(createPositionDto);
 	}
 
-	// @Get()
-	// findAll() {
-	// 	return this.positionService.findAll();
-	// }
+	@Get()
+	findAll() {
+		return this.positionService.findLastAll();
+	}
 
 	// @Get(':id')
 	// findOne(@Param('id') id: string) {

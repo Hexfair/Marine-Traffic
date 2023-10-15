@@ -6,8 +6,8 @@ import { AppService } from './app.service';
 import { ParserModule } from './parser/parser.module';
 import { PositionModule } from './position/position.module';
 import { ShipModule } from './ship/ship.module';
-import { Ship } from './ship/entities/ship.entity';
-import { Position } from './position/entities/position.entity';
+import { Ship } from './ship/ship.entity';
+import { Position } from './position/position.entity';
 import { ScheduleModule } from '@nestjs/schedule';
 
 

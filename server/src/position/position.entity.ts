@@ -1,14 +1,6 @@
-import { Ship } from 'src/ship/entities/ship.entity';
-import {
-	Column,
-	CreateDateColumn,
-	Entity,
-	ManyToOne,
-	OneToMany,
-	OneToOne,
-	PrimaryGeneratedColumn,
-	UpdateDateColumn,
-} from 'typeorm';
+import { Ship } from 'src/ship/ship.entity';
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+//===========================================================================================================
 
 @Entity()
 export class Position {
