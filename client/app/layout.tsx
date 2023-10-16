@@ -1,5 +1,6 @@
-import './globals.scss'
 import type { Metadata } from 'next'
+import { ReduxProvider } from '@/redux/provider'
+import './globals.scss'
 //===========================================================================================================
 
 export const metadata: Metadata = {
@@ -9,8 +10,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
-		<html lang="en">
-			<body>{children}</body>
-		</html>
+		<ReduxProvider>
+			<html lang="en">
+				<body>{children}</body>
+			</html>
+		</ReduxProvider>
 	)
 }

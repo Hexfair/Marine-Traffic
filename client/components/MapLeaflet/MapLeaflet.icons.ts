@@ -5,14 +5,14 @@ import styles from './MapLeaflet.module.scss'
 
 export const ShipActiveReadedIcon = L.icon({
 	iconUrl: 'Icons/ship-readed.svg',
-	iconAnchor: [5, 5],
+	iconAnchor: [10, 8],
 	popupAnchor: [0, -3],
-	className: styles.oldShipIcon
+	className: styles.oldShipIcon,
 });
 
 export const ShipActiveNewIcon = L.icon({
 	iconUrl: 'Icons/ship-new.svg',
-	iconAnchor: [5, 5],
+	iconAnchor: [12, 10],
 	popupAnchor: [0, -3],
 	className: styles.newShipIcon
 });

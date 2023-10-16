@@ -1,10 +1,10 @@
 import React from 'react'
 import { useMap } from 'react-leaflet'
 import "leaflet.offline";
-import { IRecenter } from './MapLeaflet.interface';
+import { IRecenter } from '../MapLeaflet.interface';
 //===========================================================================================================
 
-export default function Recenter(props: IRecenter) {
+export default function MapRecenter(props: IRecenter) {
 	const { lat, lng, coords, setMapCenter } = props;
 	const map = useMap();
 
