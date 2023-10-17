@@ -52,13 +52,14 @@ export class PositionService {
 		return allShipsWithLastPosition.filter(obj => obj);
 	}
 
-	async update(mmsi: number) {
+	async update(id: number) {
 		const positions = await this.positionRepository
 			.createQueryBuilder()
 			.update(Position)
 			.set({ isReaded: true })
-			.where("ship.mmsi = :mmsi", { mmsi })
+			.where("ship.id = :id", { id })
 			.execute()
+		return positions
 	}
 
 	remove(id: number) {

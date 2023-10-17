@@ -12,6 +12,7 @@ import "leaflet-rotatedmarker";
 import usePosition from '@/redux/position/position.hook';
 import { useMapEvents } from 'react-leaflet/hooks'
 import MapZoomLevel from './Plugins/MapZoomLevel';
+import socket from '@/configs/socket';
 //===========================================================================================================
 
 export default function MapLeaflet(props: MapLeafletProps) {
@@ -20,6 +21,11 @@ export default function MapLeaflet(props: MapLeafletProps) {
 
 	const [map, setMap] = React.useState<L.Map | undefined>();
 	const [mapCenter, setMapCenter] = React.useState<ICoordinate>({ lat: 51.505, lng: -0.09 });
+
+	React.useEffect(() => {
+		socket.connect();
+		return () => { socket.disconnect(); };
+	}, [map]);
 
 	React.useEffect(() => {
 		setInitialPositions(positions)

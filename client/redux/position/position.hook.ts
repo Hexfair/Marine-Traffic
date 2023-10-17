@@ -1,4 +1,4 @@
-import { setPositionsData } from "./position.slice"
+import { setPositionsData, updateIsReadedPosition } from "./position.slice"
 import { useAppDispatch, useAppSelector } from "../store";
 import { IPosition } from "@/interfaces/Position.interface";
 //===========================================================================================================
@@ -11,9 +11,14 @@ const usePosition = () => {
 		dispatch(setPositionsData(data));
 	};
 
+	const updateStatusPosition = (data: number) => {
+		dispatch(updateIsReadedPosition(data));
+	};
+
 	return {
 		positionsDataStore,
-		setInitialPositions
+		setInitialPositions,
+		updateStatusPosition
 	};
 };
 

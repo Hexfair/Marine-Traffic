@@ -1,6 +1,9 @@
+'use client'
 import React from 'react'
 import styles from './MapRightSide.module.scss'
 import { MapRightSideProps } from './MapRightSide.props';
+import ShipListItem from '../ShipListItem/ShipListItem';
+import usePosition from '@/redux/position/position.hook';
 //===========================================================================================================
 
 export default function MapRightSide(props: MapRightSideProps) {
@@ -18,15 +21,7 @@ export default function MapRightSide(props: MapRightSideProps) {
 						return 0;
 					})
 					.reverse()
-					.map((obj) =>
-						<div
-							key={obj.ship.mmsi}
-							className={`${styles.shipItem} ${!obj.isReaded && styles.newRecord}`}
-						>
-							<span>{obj.ship.acronym}</span>
-							<span>{obj.ship.name}</span>
-						</div>
-					)}
+					.map((obj) => <ShipListItem key={obj.ship.mmsi} shipItem={obj} />)}
 			</ul>
 		</div>
 	)

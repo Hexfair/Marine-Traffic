@@ -1,0 +1,41 @@
+.item {
+	display: grid;
+	grid-template-columns: 60% 20%;
+	column-gap: 10px;
+	grid-template-rows: auto;
+	grid-template-areas:
+		"names position"
+		"type position";
+	font-size: 16px;
+	margin-bottom: 5px;
+	border-bottom: 1px solid var(--text-extra-light);
+
+	&.newRecord {
+		background-color: var(--red-light);
+	}
+}
+
+.names {
+	grid-area: names;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	font-weight: 600;
+}
+
+.type {
+	grid-area: type;
+	color: var(--text-secondary);
+}
+
+.position {
+	grid-area: position;
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+
+	svg {
+		width: 30px;
+		height: 30px;
+	}
+}

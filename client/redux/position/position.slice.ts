@@ -18,8 +18,20 @@ const positionSlice = createSlice({
 		setPositionsData: (state, action: PayloadAction<IPosition[]>) => {
 			state.positionsDataStore = action.payload;
 		},
+		updateIsReadedPosition: (state, action: PayloadAction<any>) => {
+			const updateState = state.positionsDataStore.map((obj) => {
+				if (obj.ship.id === action.payload.id) {
+					obj.isReaded = true;
+					return obj;
+				} else {
+					return obj;
+				}
+			})
+			state.positionsDataStore = updateState;
+			console.log(state.positionsDataStore)
+		},
 	}
 })
 
-export const { setPositionsData } = positionSlice.actions;
+export const { setPositionsData, updateIsReadedPosition } = positionSlice.actions;
 export default positionSlice.reducer;
