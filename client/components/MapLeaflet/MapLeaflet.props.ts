@@ -3,5 +3,5 @@ import { IShip } from "@/interfaces/Ship.interface";
 //===========================================================================================================
 
 export interface MapLeafletProps {
-	positions: IPosition[];
+	//positions: IPosition[];
 }

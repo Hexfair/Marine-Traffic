@@ -15,12 +15,13 @@ const positionSlice = createSlice({
 	name: 'auth',
 	initialState,
 	reducers: {
-		setPositionsData: (state, action: PayloadAction<IPosition[]>) => {
+		setPositionsReducer: (state, action: PayloadAction<IPosition[]>) => {
 			state.positionsDataStore = action.payload;
 		},
-		updateIsReadedPosition: (state, action: PayloadAction<any>) => {
+		updateIsReadedReducer: (state, action: PayloadAction<any>) => {
+			console.log('action.payload', action.payload)
 			const updateState = state.positionsDataStore.map((obj) => {
-				if (obj.ship.id === action.payload.id) {
+				if (obj.ship.id === action.payload) {
 					obj.isReaded = true;
 					return obj;
 				} else {
@@ -33,5 +34,5 @@ const positionSlice = createSlice({
 	}
 })
 
-export const { setPositionsData, updateIsReadedPosition } = positionSlice.actions;
+export const { setPositionsReducer, updateIsReadedReducer } = positionSlice.actions;
 export default positionSlice.reducer;

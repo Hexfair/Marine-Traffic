@@ -1,4 +1,4 @@
-import { setPositionsData, updateIsReadedPosition } from "./position.slice"
+import { setPositionsReducer, updateIsReadedReducer } from "./position.slice"
 import { useAppDispatch, useAppSelector } from "../store";
 import { IPosition } from "@/interfaces/Position.interface";
 //===========================================================================================================
@@ -8,11 +8,11 @@ const usePosition = () => {
 	const dispatch = useAppDispatch();
 
 	const setInitialPositions = (data: IPosition[]) => {
-		dispatch(setPositionsData(data));
+		dispatch(setPositionsReducer(data));
 	};
 
 	const updateStatusPosition = (data: number) => {
-		dispatch(updateIsReadedPosition(data));
+		dispatch(updateIsReadedReducer(data));
 	};
 
 	return {

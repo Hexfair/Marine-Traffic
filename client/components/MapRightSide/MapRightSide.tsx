@@ -4,16 +4,17 @@ import styles from './MapRightSide.module.scss'
 import { MapRightSideProps } from './MapRightSide.props';
 import ShipListItem from '../ShipListItem/ShipListItem';
 import usePosition from '@/redux/position/position.hook';
+import socket from '@/configs/socket';
 //===========================================================================================================
 
 export default function MapRightSide(props: MapRightSideProps) {
-	const { positions } = props;
+	const { positionsDataStore, updateStatusPosition } = usePosition();
 
 	return (
 		<div className={styles.mapRightSide}>
 			<ul>
-				{positions
-					.sort((a, b) => {
+				{positionsDataStore.length > 0 && positionsDataStore
+					.toSorted((a, b) => {
 						const nameA = a.ship.acronym.toLowerCase();
 						const nameB = b.ship.acronym.toUpperCase();
 						if (nameA < nameB) return -1;

@@ -10,33 +10,33 @@ import usePosition from '@/redux/position/position.hook';
 
 export default function ShipListItem(props: ShipListItemProps) {
 	const { shipItem } = props;
-	const { updateStatusPosition, positionsDataStore } = usePosition();
+	const { positionsDataStore, updateStatusPosition } = usePosition();
 
-	const sendFirstMessage = (id: number) => {
-		console.log(id)
-		socket.emit("CLIENT:readed-position", { id });
+	const onChangeStatus = () => {
+		socket.emit("CLIENT:readed-position", { id: shipItem.ship.id });
 	};
 
 	React.useEffect(() => {
 		// Обновление статуса (прочитано)
-		const updateReadedPosition = (value: number) => { console.log(value); updateStatusPosition(value) };
-
-		socket.on('SERVER:readed-position', updateReadedPosition);
+		const serverReadedPosition = (value: number) => value === shipItem.ship.id && updateStatusPosition(value);
+		socket.on('SERVER:readed-position', serverReadedPosition);
 
 		return () => {
-			socket.off('SERVER:readed-position', updateReadedPosition);
+			socket.off('SERVER:readed-position', serverReadedPosition);
 		};
-	}, [shipItem.isReaded]);
+	}, []);
 
 	return (
 		<li
 			key={shipItem.ship.mmsi}
 			className={`${styles.item} ${!shipItem.isReaded && styles.newRecord}`}
 		>
-			<div className={styles.names}>{`${shipItem.ship.name} (${shipItem.ship.acronym})`} </div>
+			<div className={styles.names}>{`${shipItem.ship.name} (${shipItem.ship.acronym})`}</div>
 			<div className={styles.type}>{shipItem.ship.type}</div>
-			<div className={styles.position} onClick={() => sendFirstMessage(shipItem.ship.id)}>
-				{shipItem.isReaded ? <TrueReadedIcon /> : <FalseReadedIcon />}
+			<div className={styles.position}>
+				<span onClick={onChangeStatus}>
+					{shipItem.isReaded ? <TrueReadedIcon /> : <FalseReadedIcon />}
+				</span>
 			</div>
 		</li>
 	)

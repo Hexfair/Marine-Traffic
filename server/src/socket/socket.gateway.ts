@@ -18,8 +18,7 @@ export class SocketGateway {
 	@SubscribeMessage('CLIENT:readed-position')
 	async handleReadedPosition(@MessageBody() payload: { id: number }): Promise<void> {
 		const isUpdate = await this.positionService.update(payload.id);
-		if (isUpdate.affected > 1) {
-			console.log(isUpdate)
+		if (isUpdate.affected > 0) {
 			this.server.emit('SERVER:readed-position', payload.id);
 		}
 	}

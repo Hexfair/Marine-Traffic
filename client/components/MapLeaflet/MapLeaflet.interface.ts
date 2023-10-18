@@ -4,7 +4,7 @@ export interface ICoordinate {
 }
 
 export interface IRecenter extends ICoordinate {
-	coords: ICoordinate[];
+	coords: ICoordinate;
 	setMapCenter: React.Dispatch<React.SetStateAction<ICoordinate>>
 }
 

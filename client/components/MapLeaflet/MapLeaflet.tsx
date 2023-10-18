@@ -16,21 +16,11 @@ import socket from '@/configs/socket';
 //===========================================================================================================
 
 export default function MapLeaflet(props: MapLeafletProps) {
-	const { positions } = props;
+	// const { positions } = props;
 	const { positionsDataStore, setInitialPositions } = usePosition();
 
 	const [map, setMap] = React.useState<L.Map | undefined>();
 	const [mapCenter, setMapCenter] = React.useState<ICoordinate>({ lat: 51.505, lng: -0.09 });
-
-	React.useEffect(() => {
-		socket.connect();
-		return () => { socket.disconnect(); };
-	}, [map]);
-
-	React.useEffect(() => {
-		setInitialPositions(positions)
-	}, []);
-
 
 	React.useEffect(() => {
 		if (map) {
@@ -42,7 +32,7 @@ export default function MapLeaflet(props: MapLeafletProps) {
 
 			tileLayerOffline.addTo(map);
 		}
-	}, [map]);
+	}, [map, mapCenter]);
 
 	return (
 		<>
@@ -57,12 +47,12 @@ export default function MapLeaflet(props: MapLeafletProps) {
 						rotationOrigin='center center'
 					>
 						<Popup children={<div><p>{`Координаты: ${obj.latitude}, ${obj.longitude}`}</p>
-							<p>{obj.ship.acronym}</p>
+							<p onClick={() => setMapCenter({ lat: 11.505, lng: -0.09 })}>{obj.ship.acronym}</p>
 							<p>{obj.ship.name}</p>
 						</div>} />
 					</Marker>)}
 				{/* <MapZoomLevel /> */}
-				{/* <MapRecenter lat={mapCenter.lat} lng={mapCenter.lng} coords={[{ lat: 50.00, lng: 0.00 }]} setMapCenter={setMapCenter} /> */}
+				<MapRecenter lat={mapCenter.lat} lng={mapCenter.lng} coords={mapCenter} setMapCenter={setMapCenter} />
 			</MapContainer>
 		</>
 	)
