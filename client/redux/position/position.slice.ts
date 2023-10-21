@@ -5,10 +5,12 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface PositionSliceData {
 	positionsDataStore: IPosition[],
+	isDateSorted: boolean
 }
 
 const initialState: PositionSliceData = {
 	positionsDataStore: [],
+	isDateSorted: false
 }
 
 const positionSlice = createSlice({
@@ -17,6 +19,9 @@ const positionSlice = createSlice({
 	reducers: {
 		setPositionsReducer: (state, action: PayloadAction<IPosition[]>) => {
 			state.positionsDataStore = action.payload;
+		},
+		setIsDateSortReducer: (state, action: PayloadAction<boolean>) => {
+			state.isDateSorted = action.payload;
 		},
 		updateIsReadedReducer: (state, action: PayloadAction<any>) => {
 			console.log('action.payload', action.payload)
@@ -34,5 +39,5 @@ const positionSlice = createSlice({
 	}
 })
 
-export const { setPositionsReducer, updateIsReadedReducer } = positionSlice.actions;
+export const { setPositionsReducer, setIsDateSortReducer, updateIsReadedReducer } = positionSlice.actions;
 export default positionSlice.reducer;

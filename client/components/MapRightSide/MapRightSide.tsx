@@ -5,15 +5,35 @@ import { MapRightSideProps } from './MapRightSide.props';
 import ShipListItem from '../ShipListItem/ShipListItem';
 import usePosition from '@/redux/position/position.hook';
 import socket from '@/configs/socket';
+import { checkOldPosition } from '@/helpers/check-old-position.helper';
 //===========================================================================================================
 
 export default function MapRightSide(props: MapRightSideProps) {
-	const { positionsDataStore, updateStatusPosition } = usePosition();
+	const { positionsDataStore, setStatusDateSorted, isDateSorted } = usePosition();
+
+	const handleChange = () => {
+		setStatusDateSorted(!isDateSorted);
+	};
 
 	return (
 		<div className={styles.mapRightSide}>
+			<label>
+				<input
+					type="checkbox"
+					checked={isDateSorted}
+					onChange={handleChange}
+				/>
+				last 1 day
+			</label>
 			<ul>
 				{positionsDataStore.length > 0 && positionsDataStore
+					.filter((obj) => {
+						if (isDateSorted) {
+							return checkOldPosition(obj.latestTime) && obj
+						} else {
+							return obj
+						}
+					})
 					.toSorted((a, b) => {
 						const nameA = a.ship.acronym.toLowerCase();
 						const nameB = b.ship.acronym.toUpperCase();
