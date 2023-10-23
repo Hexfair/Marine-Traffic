@@ -7,25 +7,24 @@ import "leaflet/dist/leaflet.css";
 import { MapLeafletProps } from './MapLeaflet.props';
 import { ICoordinate } from './MapLeaflet.interface';
 import MapRecenter from './Plugins/MapRecenter';
-import { ShipActiveReadedIcon, ShipActiveNewIcon, ShipStopedIcon } from './MapLeaflet.icons';
+import { ShipReadedIcon, ShipNewIcon, ShipSelectedIcon } from './MapLeaflet.icons';
 import "leaflet-rotatedmarker";
-import usePosition from '@/redux/position/position.hook';
-import { useMapEvents } from 'react-leaflet/hooks'
-import MapZoomLevel from './Plugins/MapZoomLevel';
-import socket from '@/configs/socket';
+import usePositionStore from '@/redux/position/position.hook';
 import { checkOldPosition } from '@/helpers/check-old-position.helper';
+import useOptionsStore from '@/redux/options/options.hook';
+import useMapsStore from '@/redux/maps/maps.hook';
 //===========================================================================================================
 
 export default function MapLeaflet(props: MapLeafletProps) {
-	// const { positions } = props;
-	const { positionsDataStore, isDateSorted } = usePosition();
+	const { positionsDataStore } = usePositionStore();
+	const { filter } = useOptionsStore();
+	const { mapCenterData } = useMapsStore();
 
 	const [map, setMap] = React.useState<L.Map | undefined>();
-	const [mapCenter, setMapCenter] = React.useState<ICoordinate>({ lat: 51.505, lng: -0.09 });
 
 	React.useEffect(() => {
 		if (map) {
-			const tileLayerOffline = L.tileLayer('./MapLayers/{z}/{x}/{y}.png', {
+			const tileLayerOffline = L.tileLayer('./MapLayers/{z}/{x}/{y}.webp', {
 				maxZoom: 9,
 				minZoom: 1,
 				tileSize: 256,
@@ -33,36 +32,39 @@ export default function MapLeaflet(props: MapLeafletProps) {
 
 			tileLayerOffline.addTo(map);
 		}
-	}, [map, mapCenter]);
+	}, [map]);
 
 	return (
 		<>
-			<MapContainer center={mapCenter} zoom={4} scrollWheelZoom={true} worldCopyJump>
-				<TileLayer url="./MapLayers/{z}/{x}/{y}.png" />
+			<MapContainer center={mapCenterData} zoom={4} scrollWheelZoom={true} worldCopyJump>
+				<TileLayer url="./MapLayers/{z}/{x}/{y}.webp" />
 				{positionsDataStore.length > 0 && positionsDataStore
 					.filter((obj) => {
-						if (isDateSorted) {
-							return checkOldPosition(obj.latestTime) && obj
-						} else {
-							return obj
+						if (filter !== 'all') {
+							return checkOldPosition(obj.latestTime, filter) && obj
 						}
+						return obj
 					})
 					.map((obj, index) =>
 						<Marker
 							key={obj.ship.mmsi}
 							position={{ lat: obj.latitude, lng: obj.longitude }}
-							icon={obj.isReaded ? ShipActiveReadedIcon : ShipActiveNewIcon}
+							icon={mapCenterData.lat === obj.latitude && mapCenterData.lng === obj.longitude
+								? ShipSelectedIcon
+								: obj.isReaded
+									? ShipReadedIcon
+									: ShipNewIcon}
 							rotationAngle={obj.course}
 							rotationOrigin='center center'
 						>
 							<Popup children={<div><p>{`Координаты: ${obj.latitude}, ${obj.longitude}`}</p>
-								<p onClick={() => setMapCenter({ lat: 11.505, lng: -0.09 })}>{obj.ship.acronym}</p>
+								<p>{obj.ship.acronym}</p>
 								<p>{obj.ship.name}</p>
 							</div>} />
 						</Marker>)}
 				{/* <MapZoomLevel /> */}
-				<MapRecenter lat={mapCenter.lat} lng={mapCenter.lng} coords={mapCenter} setMapCenter={setMapCenter} />
-			</MapContainer>
+				<MapRecenter />
+			</MapContainer >
 		</>
 	)
 }

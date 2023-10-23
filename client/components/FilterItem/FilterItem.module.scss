@@ -1,0 +1,13 @@
+.filterItem {
+	width: 100px;
+	height: 60px;
+	text-align: left;
+	padding: 5px 15px;
+	text-wrap: nowrap;
+	box-shadow: 0px 0px 3px 0px var(--primary);
+	cursor: pointer;
+
+	&.wide {
+		width: 130px;
+	}
+}

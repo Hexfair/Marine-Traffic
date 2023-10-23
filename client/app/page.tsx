@@ -4,13 +4,13 @@ import styles from './page.module.scss'
 import dynamic from 'next/dynamic';
 import { IPosition } from '@/interfaces/Position.interface';
 import MapRightSide from '@/components/MapRightSide/MapRightSide';
-import usePosition from '@/redux/position/position.hook';
+import usePositionStore from '@/redux/position/position.hook';
 import socket from '@/configs/socket';
 const MapLeaflet = dynamic(() => import("@/components/MapLeaflet/MapLeaflet"), { ssr: false });
 //===========================================================================================================
 
 export default function Home() {
-	const { positionsDataStore, setInitialPositions } = usePosition();
+	const { positionsDataStore, setInitialPositions } = usePositionStore();
 
 	React.useEffect(() => {
 		const fetchData = async () => {

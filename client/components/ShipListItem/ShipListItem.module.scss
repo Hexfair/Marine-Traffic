@@ -7,11 +7,14 @@
 		"names position"
 		"type position";
 	font-size: 16px;
-	margin-bottom: 5px;
+	margin-bottom: 3px;
 	border-bottom: 1px solid var(--text-extra-light);
+	text-wrap: nowrap;
+	padding: 2px 5px;
 
 	&.newRecord {
 		background-color: var(--red-light);
+		border-bottom: none;
 	}
 }
 
@@ -28,14 +31,18 @@
 	color: var(--text-secondary);
 }
 
-.position {
+.options {
 	grid-area: position;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
+	line-height: 0;
 
-	svg {
-		width: 30px;
-		height: 30px;
+	.buttonReaded, .buttonShipTarget {
+		cursor: pointer;
+	}
+	
+	.buttonReaded {
+		margin-right: 10px;
 	}
 }

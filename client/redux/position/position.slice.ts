@@ -5,39 +5,30 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 
 export interface PositionSliceData {
 	positionsDataStore: IPosition[],
-	isDateSorted: boolean
 }
 
 const initialState: PositionSliceData = {
 	positionsDataStore: [],
-	isDateSorted: false
 }
 
 const positionSlice = createSlice({
-	name: 'auth',
+	name: 'position',
 	initialState,
 	reducers: {
 		setPositionsReducer: (state, action: PayloadAction<IPosition[]>) => {
 			state.positionsDataStore = action.payload;
 		},
-		setIsDateSortReducer: (state, action: PayloadAction<boolean>) => {
-			state.isDateSorted = action.payload;
-		},
 		updateIsReadedReducer: (state, action: PayloadAction<any>) => {
-			console.log('action.payload', action.payload)
 			const updateState = state.positionsDataStore.map((obj) => {
 				if (obj.ship.id === action.payload) {
 					obj.isReaded = true;
-					return obj;
-				} else {
-					return obj;
 				}
+				return obj;
 			})
 			state.positionsDataStore = updateState;
-			console.log(state.positionsDataStore)
 		},
 	}
 })
 
-export const { setPositionsReducer, setIsDateSortReducer, updateIsReadedReducer } = positionSlice.actions;
+export const { setPositionsReducer, updateIsReadedReducer } = positionSlice.actions;
 export default positionSlice.reducer;
