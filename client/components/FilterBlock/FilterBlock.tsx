@@ -2,22 +2,31 @@ import React from 'react';
 import styles from './FilterBlock.module.scss';
 import PlusIcon from '@/public/Icons/plus.svg';
 import MinusIcon from '@/public/Icons/minus.svg';
-import { FilterItem } from '../FilterItem/FilterItem';
-import { FILTER, SORT } from './FilterBlock.constants';
+import { FilterButton } from '../FilterButton/FilterButton';
+import { FILTER_BY_TIME, FILTER_BY_TYPE, SORT } from './FilterBlock.constants';
 import useOptionsStore from '@/redux/options/options.hook';
-import { FilterType, SortType } from './FilterBlock.interfaces';
+import { FiltersByTime, FiltersByType, SortType } from './FilterBlock.interfaces';
+import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
 
 //=========================================================================================================================
 
 
 export const FilterBlock = () => {
 	const [isOpenFilter, setIsOpenFilter] = React.useState<boolean>(false);
-	const { filter, sort, setFilter, setSort } = useOptionsStore();
+	const { filter, sort, setFilterByTime, setFilterByType, setSort } = useOptionsStore();
 
 	const buttonRef = React.useRef<HTMLButtonElement>(null);
+	const checkboxRef = React.useRef<HTMLInputElement>(null);
 
-	const updateFilter = (value: FilterType) => {
-		setFilter(value);
+	const updateFilterByTime = (value: FiltersByTime) => {
+		setFilterByTime(value);
+	}
+
+	const updateFilterByType = (value: FiltersByType) => {
+		let newFilter: FiltersByType[] = filter.byType.includes(value)
+			? [...filter.byType].filter(obj => obj !== value)
+			: [...filter.byType, value];
+		setFilterByType(newFilter);
 	}
 
 	const updateSort = (value: SortType) => {
@@ -60,31 +69,44 @@ export const FilterBlock = () => {
 				</button>
 			</div>
 			<div className={`${styles.filters} ${isOpenFilter && styles.active}`}>
-				<div className={styles.byTime}>
-					{FILTER.map((obj) =>
-						<FilterItem
-							key={obj.text}
-							icon={obj.icon}
-							text={obj.text}
-							onClick={() => updateFilter(obj.param)}
-							className={filter === obj.param ? styles.activeFilter : ''}
-							ref={buttonRef}
-						/>
-					)}
-				</div>
-				<hr className={styles.divider} />
+				<p className={styles.filterTextOption}>Sort by:</p>
 				<div className={styles.byOther}>
 					{SORT.map((obj) =>
-						<FilterItem
+						<FilterButton
 							key={obj.text}
 							icon={obj.icon}
 							text={obj.text}
 							onClick={() => updateSort(obj.param)}
 							className={setClassNameFunc(obj.param)}
 							ref={buttonRef}
-							isWide />
-					)}
+							isWide />)}
 				</div>
+				<hr className={styles.divider} />
+				<p className={styles.filterTextOption}>Filter by time:</p>
+				<div className={styles.byTime}>
+					{FILTER_BY_TIME.map((obj) =>
+						<FilterButton
+							key={obj.text}
+							icon={obj.icon}
+							text={obj.text}
+							onClick={() => updateFilterByTime(obj.param)}
+							className={filter.byTime === obj.param ? styles.activeFilter : ''}
+							ref={buttonRef}
+						/>)}
+				</div>
+				<p className={styles.filterTextOption}>Filter by type:</p>
+				<div className={styles.byType}>
+					{FILTER_BY_TYPE.sort().map((obj) =>
+						<FilterCheckbox
+							key={obj}
+							label={obj}
+							onChange={() => updateFilterByType(obj)}
+							isChecked={filter.byType.includes(obj)}
+							// className={filter.byTime === obj.param ? styles.activeFilter : ''}
+							ref={checkboxRef}
+						/>)}
+				</div>
+
 			</div>
 		</div >
 	)

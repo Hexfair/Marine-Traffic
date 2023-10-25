@@ -1,0 +1,35 @@
+.checkbox {
+	margin-bottom: 5px;
+}
+
+.input {
+	-webkit-appearance: none;
+	appearance: none;
+	width: 20px;
+	height: 20px;
+	margin: 0px 10px 0px 10px;
+	box-shadow: 0px 0px 3px 0px var(--primary);
+	vertical-align: middle;
+	position: relative;
+	cursor: pointer;
+
+	&.checked {
+		box-shadow: 0px 0px 4px 1px var(--red-dark);
+	
+		&::before {
+			content: "";
+			width: 14px;
+			height: 14px;
+			box-shadow: 0px 0px 3px 0px var(--red-dark);
+			background-color: var(--red-dark);
+			position: absolute;
+			left: 3px;
+			top: 3px;
+			border-radius: 3px;
+			opacity: 0.7;
+		}
+	}
+
+
+}
+

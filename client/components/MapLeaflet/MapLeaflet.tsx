@@ -40,11 +40,12 @@ export default function MapLeaflet(props: MapLeafletProps) {
 				<TileLayer url="./MapLayers/{z}/{x}/{y}.webp" />
 				{positionsDataStore.length > 0 && positionsDataStore
 					.filter((obj) => {
-						if (filter !== 'all') {
+						if (filter.byTime !== 'all') {
 							return checkOldPosition(obj.latestTime, filter) && obj
 						}
 						return obj
 					})
+					.filter((obj) => filter.byType.includes(obj.ship.type))
 					.map((obj, index) =>
 						<Marker
 							key={obj.ship.mmsi}

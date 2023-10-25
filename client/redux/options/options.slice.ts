@@ -1,15 +1,21 @@
-import { FilterType, SortType } from '@/components/FilterBlock/FilterBlock.interfaces';
+import { FiltersByTime, FiltersByType, SortType } from '@/components/FilterBlock/FilterBlock.interfaces';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 //===========================================================================================================
 
 export interface OptionsSliceData {
-	filter: FilterType,
+	filter: {
+		byTime: FiltersByTime,
+		byType: FiltersByType[]
+	},
 	sort: 'oldest' | 'namesUp' | 'namesDown'
 }
 
 const initialState: OptionsSliceData = {
-	filter: 'day',
+	filter: {
+		byTime: 'day',
+		byType: ['Attack Submarines', 'Ballistic Missile Submarines', 'Guided Missile Destroyers', 'Guided Missile Submarines', 'Saildrone Voyager']
+	},
 	sort: 'oldest'
 }
 
@@ -17,8 +23,11 @@ const optionsSlice = createSlice({
 	name: 'options',
 	initialState,
 	reducers: {
-		setFilterReducer: (state, action: PayloadAction<OptionsSliceData['filter']>) => {
-			state.filter = action.payload;
+		setFilterByTimeReducer: (state, action: PayloadAction<FiltersByTime>) => {
+			state.filter.byTime = action.payload;
+		},
+		setFilterByTypeReducer: (state, action: PayloadAction<FiltersByType[]>) => {
+			state.filter.byType = action.payload;
 		},
 		setSortReducer: (state, action: PayloadAction<OptionsSliceData['sort']>) => {
 			state.sort = action.payload;
@@ -26,5 +35,5 @@ const optionsSlice = createSlice({
 	}
 })
 
-export const { setFilterReducer, setSortReducer } = optionsSlice.actions;
+export const { setFilterByTimeReducer, setFilterByTypeReducer, setSortReducer } = optionsSlice.actions;
 export default optionsSlice.reducer;

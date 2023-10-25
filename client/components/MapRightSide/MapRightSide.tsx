@@ -19,11 +19,12 @@ export default function MapRightSide(props: MapRightSideProps) {
 			<ul className={styles.shipList}>
 				{positionsDataStore.length > 0 && positionsDataStore
 					.filter((obj) => {
-						if (filter !== 'all') {
+						if (filter.byTime !== 'all') {
 							return checkOldPosition(obj.latestTime, filter) && obj
 						}
 						return obj
 					})
+					.filter((obj) => filter.byType.includes(obj.ship.type))
 					.toSorted((a, b) => {
 						const nameA = a.ship.acronym.toLowerCase();
 						const nameB = b.ship.acronym.toUpperCase();

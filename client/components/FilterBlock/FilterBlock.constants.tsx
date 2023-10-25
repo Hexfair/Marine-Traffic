@@ -4,22 +4,11 @@ import MonthFilterIcon from '@/public/Icons/filters/month-filter.svg';
 import AllFilterIcon from '@/public/Icons/filters/all-filter.svg';
 import NewFilterIcon from '@/public/Icons/filters/new-filter.svg';
 import AlphabetFilterIcon from '@/public/Icons/filters/alphabet-filter.svg';
-import { FilterType, SortType } from './FilterBlock.interfaces';
+import { FiltersByType, IFilterByTime, ISort } from './FilterBlock.interfaces';
 //=========================================================================================================================
 
-export interface IFilter {
-	text: string,
-	icon: React.ReactNode,
-	param: FilterType
-}
 
-export interface ISort {
-	text: string,
-	icon: React.ReactNode,
-	param: SortType
-}
-
-export const FILTER: IFilter[] = [
+export const FILTER_BY_TIME: IFilterByTime[] = [
 	{
 		text: '1 day',
 		icon: <DayFilterIcon />,
@@ -41,6 +30,11 @@ export const FILTER: IFilter[] = [
 		param: 'all'
 	}
 ]
+
+export const FILTER_BY_TYPE: FiltersByType[] = ['Submarine Tenders', 'Guided Missile Cruisers', 'Aircraft Carriers',
+	'Guided Missile Destroyers', 'Expeditionary Sea Base', 'Amphibious Command Ships',
+	'Littoral Combat Ships', 'Amphibious Assault Ships', 'Amphibious Transport Dock', 'Dock Landing Ships',
+	'Mine Countermeasures Ships', 'Ballistic Missile Submarines', 'Guided Missile Submarines', 'Attack Submarines', 'Saildrone Voyager']
 
 export const SORT: ISort[] = [
 	{

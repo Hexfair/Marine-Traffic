@@ -1,10 +1,12 @@
+import { FiltersByType } from "@/components/FilterBlock/FilterBlock.interfaces";
+
 export interface IShip {
 	id: number,
 	mmsi: number,
 	name: string,
 	base: string,
 	acronym: string,
-	type: string,
+	type: FiltersByType,
 	createdAt: Date
 }
 

@@ -32,12 +32,12 @@
 
 .filters {
 	overflow: hidden;
-	animation: hide 1s;
+	animation: hide 0.6s;
 	animation-fill-mode: forwards;
 
 	&.active {
 		animation-fill-mode: forwards;
-		animation: show 1s;
+		animation: show 0.8s;
 	}
 
 	.byTime, .byOther {
@@ -51,6 +51,9 @@
 		}
 	}
 
+	.filterTextOption {
+		margin-bottom: 10px;
+	}
 }
 
 
@@ -59,13 +62,13 @@
 		height: 0;
 	}
 	100% {
-		height: 160px;
+		height: 611px;
 	}
  }
 
  @keyframes hide {
 	0% {
-		height: 160px;
+		height: 611px;
 	}
 	100% {
 		height: 0;

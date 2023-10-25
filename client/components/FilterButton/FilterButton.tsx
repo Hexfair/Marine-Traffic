@@ -1,10 +1,10 @@
 import React from 'react';
-import styles from './FilterItem.module.scss';
-import { FilterItemProps } from './FilterItem.props';
+import styles from './FilterButton.module.scss';
+import { FilterItemProps } from './FilterButton.props';
 import MinusIcon from '@/public/Icons/minus.svg';
 //=========================================================================================================================
 
-export const FilterItem = React.forwardRef((props: FilterItemProps, ref: React.Ref<HTMLButtonElement>) => {
+export const FilterButton = React.forwardRef((props: FilterItemProps, ref: React.Ref<HTMLButtonElement>) => {
 	const { icon, text, isWide, className, ...rest } = props;
 	const [isOpenFilter, setIsOpenFilter] = React.useState<boolean>(false);
 

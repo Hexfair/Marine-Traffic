@@ -21,7 +21,7 @@ export class ParserService {
 		private readonly shipService: ShipService,
 	) { }
 
-	@Cron('0 0 */2 * * *')
+	@Cron('0 0 */3 * * *')
 	async handleCron() {
 		console.log('Время запуска парсера: ', dayjs().format('YYYY-MM-DD HH:mm'));
 
@@ -57,7 +57,6 @@ export class ParserService {
 		}, 60000);
 
 		const fetch = async (params: string) => {
-			console.log(params)
 			try {
 				await page.goto(basicUrl + params, { waitUntil: 'networkidle0' });
 				await page.setViewport({ width: 1680, height: 1220 });

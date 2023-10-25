@@ -1,15 +1,18 @@
-import { OptionsSliceData, setFilterReducer, setSortReducer } from "./options.slice"
+import { OptionsSliceData, setFilterByTimeReducer, setFilterByTypeReducer, setSortReducer } from "./options.slice"
 import { useAppDispatch, useAppSelector } from "../store";
-import { FilterType, SortType } from "@/components/FilterBlock/FilterBlock.interfaces";
+import { FiltersByTime, FiltersByType } from "@/components/FilterBlock/FilterBlock.interfaces";
 //===========================================================================================================
 
 const useOptionsStore = () => {
 	const { filter, sort } = useAppSelector((state) => state.options);
 	const dispatch = useAppDispatch();
 
-	const setFilter = (data: FilterType) => {
-		console.log(data);
-		dispatch(setFilterReducer(data));
+	const setFilterByTime = (data: FiltersByTime) => {
+		dispatch(setFilterByTimeReducer(data));
+	};
+
+	const setFilterByType = (data: FiltersByType[]) => {
+		dispatch(setFilterByTypeReducer(data));
 	};
 
 	const setSort = (data: OptionsSliceData['sort']) => {
@@ -19,7 +22,8 @@ const useOptionsStore = () => {
 	return {
 		filter,
 		sort,
-		setFilter,
+		setFilterByTime,
+		setFilterByType,
 		setSort
 	};
 };
