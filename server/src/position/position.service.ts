@@ -62,6 +62,15 @@ export class PositionService {
 		return positions
 	}
 
+	async updateAll() {
+		const positions = await this.positionRepository
+			.createQueryBuilder()
+			.update(Position)
+			.set({ isReaded: true })
+			.execute()
+		return positions
+	}
+
 	remove(id: number) {
 		return `This action removes a #${id} position`;
 	}

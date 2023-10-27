@@ -22,4 +22,13 @@ export class SocketGateway {
 			this.server.emit('SERVER:readed-position', payload.id);
 		}
 	}
+
+	/* Изменение статуса  позиций всех кораблей на "прочитано" */
+	@SubscribeMessage('CLIENT:readed-all-positions')
+	async handleReadedAllPositions(): Promise<void> {
+		const isUpdate = await this.positionService.updateAll();
+		if (isUpdate.affected > 0) {
+			this.server.emit('SERVER:readed-all-positions');
+		}
+	}
 }

@@ -1,5 +1,6 @@
 .checkbox {
 	margin-bottom: 5px;
+	display: block;
 }
 
 .input {
@@ -30,6 +31,28 @@
 		}
 	}
 
+	&.small {
+		width: 15px;
+		height: 15px;
+		margin: 0px 8px 0px 8px;
+		box-shadow: 0px 0px 3px 0px var(--primary);
 
+		&.checked {
+			box-shadow: 0px 0px 3px 1px var(--red-dark);
+		
+			&::before {
+				content: "";
+				width: 11px;
+				height: 11px;
+				box-shadow: 0px 0px 3px 0px var(--red-dark);
+				background-color: var(--red-dark);
+				position: absolute;
+				left: 2px;
+				top: 2px;
+				border-radius: 2px;
+				opacity: 0.7;
+			}
+		}
+	}
 }
 

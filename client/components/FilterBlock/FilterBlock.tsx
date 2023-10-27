@@ -1,3 +1,4 @@
+'use client'
 import React from 'react';
 import styles from './FilterBlock.module.scss';
 import PlusIcon from '@/public/Icons/plus.svg';
@@ -6,8 +7,7 @@ import { FilterButton } from '../FilterButton/FilterButton';
 import { FILTER_BY_TIME, FILTER_BY_TYPE, SORT } from './FilterBlock.constants';
 import useOptionsStore from '@/redux/options/options.hook';
 import { FiltersByTime, FiltersByType, SortType } from './FilterBlock.interfaces';
-import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
-
+import { Checkbox } from '../FilterCheckbox/Checkbox';
 //=========================================================================================================================
 
 
@@ -97,12 +97,11 @@ export const FilterBlock = () => {
 				<p className={styles.filterTextOption}>Filter by type:</p>
 				<div className={styles.byType}>
 					{FILTER_BY_TYPE.sort().map((obj) =>
-						<FilterCheckbox
+						<Checkbox
 							key={obj}
 							label={obj}
 							onChange={() => updateFilterByType(obj)}
 							isChecked={filter.byType.includes(obj)}
-							// className={filter.byTime === obj.param ? styles.activeFilter : ''}
 							ref={checkboxRef}
 						/>)}
 				</div>

@@ -8,13 +8,15 @@
 }
 
 .shipList {
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
-.shipItem {
-	background-color: white;
+.tableHead {
+	font-size: 13px;
+	width: 100%;
 }
 
-.newRecord {
-	background-color: rgb(214, 137, 137);
+.tableBody {
+	transform: translateY(10px);
 }
+

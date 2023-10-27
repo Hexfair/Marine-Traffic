@@ -21,6 +21,7 @@ export class ShipService {
 			relations: { positions: true },
 			where: { mmsi },
 		});
+
 		const { positions, ...shipData } = ship;
 		positions.sort((a, b) => b.latestTime - a.latestTime).slice((page - 1) * 10, page * 10);
 		return { ...shipData, positions };

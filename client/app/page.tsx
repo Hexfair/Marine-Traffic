@@ -3,7 +3,7 @@ import React from 'react';
 import styles from './page.module.scss'
 import dynamic from 'next/dynamic';
 import { IPosition } from '@/interfaces/Position.interface';
-import MapRightSide from '@/components/MapRightSide/MapRightSide';
+import HomePageRightSide from '@/components/HomePageRightSide/HomePageRightSide';
 import usePositionStore from '@/redux/position/position.hook';
 import socket from '@/configs/socket';
 const MapLeaflet = dynamic(() => import("@/components/MapLeaflet/MapLeaflet"), { ssr: false });
@@ -19,17 +19,21 @@ export default function Home() {
 			setInitialPositions(result);
 		}
 		fetchData();
-	}, [])
+	}, []);
 
 	React.useEffect(() => {
 		socket.connect();
 		return () => { socket.disconnect() };
 	}, []);
 
+	if (positionsDataStore.length === 0) {
+		return <p>LOADING</p>
+	};
+
 	return (
 		<main className={styles.main}>
-			<MapLeaflet />
-			<MapRightSide />
+			<MapLeaflet viewData={positionsDataStore} />
+			<HomePageRightSide />
 		</main>
 	)
 }

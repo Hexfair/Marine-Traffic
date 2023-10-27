@@ -1,6 +1,6 @@
 import { IPosition } from "@/interfaces/Position.interface";
 //===========================================================================================================
 
-export interface MapRightSideProps {
+export interface HomePageRightSideProps {
 	//positions: IPosition[];
 }

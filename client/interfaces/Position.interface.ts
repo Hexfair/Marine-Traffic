@@ -9,5 +9,5 @@ export interface IPosition {
 	isReaded: boolean,
 	latestTime: number,
 	createdAt: Date,
-	ship: IShip,
+	ship?: IShip,
 }

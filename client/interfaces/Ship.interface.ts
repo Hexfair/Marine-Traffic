@@ -1,4 +1,5 @@
 import { FiltersByType } from "@/components/FilterBlock/FilterBlock.interfaces";
+import { IPosition } from "./Position.interface";
 
 export interface IShip {
 	id: number,
@@ -7,7 +8,8 @@ export interface IShip {
 	base: string,
 	acronym: string,
 	type: FiltersByType,
-	createdAt: Date
+	createdAt: Date,
+	positions: IPosition[]
 }
 
 // export interface IRecenter extends ICoordinate {

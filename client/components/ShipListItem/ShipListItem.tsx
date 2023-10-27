@@ -5,6 +5,7 @@ import { ShipListItemProps } from './ShipListItem.props';
 import FalseReadedIcon from '@/public/Icons/isReaded-false.svg';
 import TrueReadedIcon from '@/public/Icons/isReaded-true.svg';
 import ShipTargetIcon from '@/public/Icons/ship-target.svg';
+import RouteIcon from '@/public/Icons/route.svg';
 import socket from '@/configs/socket';
 import usePositionStore from '@/redux/position/position.hook';
 import useMapsStore from '@/redux/maps/maps.hook';
@@ -45,9 +46,11 @@ export const ShipListItem = (props: ShipListItemProps) => {
 				<button className={styles.buttonReaded} onClick={onChangeStatus}>
 					{shipItem.isReaded ? <TrueReadedIcon /> : <FalseReadedIcon />}
 				</button>
-				<button className={styles.buttonShipTarget} onClick={() => updateMapCenter({ lat: shipItem.latitude, lng: shipItem.longitude })}
-				>
+				<button className={styles.buttonShipTarget} onClick={() => updateMapCenter({ lat: shipItem.latitude, lng: shipItem.longitude })}>
 					<ShipTargetIcon />
+				</button>
+				<button className={styles.buttonReaded} onClick={onChangeStatus}>
+					<RouteIcon />
 				</button>
 			</div>
 		</li>

@@ -5,18 +5,16 @@ import L from "leaflet";
 import { MapContainer, TileLayer, Polygon, Popup, Polyline, Marker } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
 import { MapLeafletProps } from './MapLeaflet.props';
-import { ICoordinate } from './MapLeaflet.interface';
 import MapRecenter from './Plugins/MapRecenter';
 import { ShipReadedIcon, ShipNewIcon, ShipSelectedIcon } from './MapLeaflet.icons';
 import "leaflet-rotatedmarker";
-import usePositionStore from '@/redux/position/position.hook';
 import { checkOldPosition } from '@/helpers/check-old-position.helper';
 import useOptionsStore from '@/redux/options/options.hook';
 import useMapsStore from '@/redux/maps/maps.hook';
 //===========================================================================================================
 
 export default function MapLeaflet(props: MapLeafletProps) {
-	const { positionsDataStore } = usePositionStore();
+	const { viewData, isFullShipPage } = props;
 	const { filter } = useOptionsStore();
 	const { mapCenterData } = useMapsStore();
 
@@ -38,15 +36,15 @@ export default function MapLeaflet(props: MapLeafletProps) {
 		<>
 			<MapContainer center={mapCenterData} zoom={4} scrollWheelZoom={true} worldCopyJump>
 				<TileLayer url="./MapLayers/{z}/{x}/{y}.webp" />
-				{positionsDataStore.length > 0 && positionsDataStore
+				{viewData.length > 0 && viewData
 					.filter((obj) => {
 						if (filter.byTime !== 'all') {
-							return checkOldPosition(obj.latestTime, filter) && obj
+							return checkOldPosition(obj.latestTime, filter.byTime) && obj
 						}
 						return obj
 					})
-					.filter((obj) => filter.byType.includes(obj.ship.type))
-					.map((obj, index) =>
+					.filter((obj) => !isFullShipPage && filter.byType.includes(obj.ship.type))
+					.map((obj) =>
 						<Marker
 							key={obj.ship.mmsi}
 							position={{ lat: obj.latitude, lng: obj.longitude }}
@@ -63,7 +61,6 @@ export default function MapLeaflet(props: MapLeafletProps) {
 								<p>{obj.ship.name}</p>
 							</div>} />
 						</Marker>)}
-				{/* <MapZoomLevel /> */}
 				<MapRecenter />
 			</MapContainer >
 		</>

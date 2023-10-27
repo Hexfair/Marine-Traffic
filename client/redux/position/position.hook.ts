@@ -1,4 +1,4 @@
-import { setPositionsReducer, updateIsReadedReducer } from "./position.slice"
+import { setPositionsReducer, updateIsReadedReducer, updateAllReadedReducer } from "./position.slice"
 import { useAppDispatch, useAppSelector } from "../store";
 import { IPosition } from "@/interfaces/Position.interface";
 //===========================================================================================================
@@ -11,15 +11,19 @@ const usePositionStore = () => {
 		dispatch(setPositionsReducer(data));
 	};
 
-
 	const updateStatusPosition = (data: number) => {
 		dispatch(updateIsReadedReducer(data));
+	};
+
+	const updateStatusAllPositions = (data: boolean) => {
+		dispatch(updateAllReadedReducer(data));
 	};
 
 	return {
 		positionsDataStore,
 		setInitialPositions,
-		updateStatusPosition
+		updateStatusPosition,
+		updateStatusAllPositions
 	};
 };
 
