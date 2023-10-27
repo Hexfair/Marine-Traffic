@@ -22,3 +22,9 @@ export const ShipSelectedIcon = L.icon({
 	iconAnchor: [5, 5],
 	popupAnchor: [0, -3],
 });
+
+export const CircleIcon = L.icon({
+	iconUrl: 'Icons/circle.svg',
+	iconAnchor: [4, 4],
+	popupAnchor: [0, -3],
+});

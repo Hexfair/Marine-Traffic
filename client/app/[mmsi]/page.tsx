@@ -6,10 +6,15 @@ import useShipStore from '@/redux/ship/ship.hook';
 import MapLeaflet from '@/components/MapLeaflet/MapLeaflet';
 import { IShip } from '@/interfaces/Ship.interface';
 import ShipPageRightSide from '@/components/ShipPageRightSide/ShipPageRightSide';
+import useOptionsStore from '@/redux/options/options.hook';
+import useMapsStore from '@/redux/maps/maps.hook';
 //===========================================================================================================
 
 export default function ShipPage({ params }: { params: { mmsi: string } }) {
-	const { positionsDataStore, shipDataStore, setShipFullData } = useShipStore();
+	const { shipFullStore, setShipFullData } = useShipStore();
+	const { setPositionFilterByChecked } = useOptionsStore();
+	const { updateMapsCenter } = useMapsStore();
+
 
 	React.useEffect(() => {
 		const fetchData = async () => {
@@ -24,18 +29,27 @@ export default function ShipPage({ params }: { params: { mmsi: string } }) {
 			);
 			const result: IShip = await data.json();
 			setShipFullData(result);
+
+			const initialCheckPosition = result.positions[0].id
+			setPositionFilterByChecked([initialCheckPosition]);
+
+			const mapInitialCenterCoord = {
+				lat: result.positions[0].latitude,
+				lng: result.positions[0].longitude,
+			}
+			updateMapsCenter(mapInitialCenterCoord);
 		}
 		fetchData();
 	}, [])
 
-	if (shipDataStore === null || positionsDataStore === null) {
+	if (shipFullStore === null) {
 		return <p>LOADING</p>
 	}
 
 	return (
 		<div className={styles.page}>
-			<MapLeaflet viewData={positionsDataStore} isFullShipPage />
-			<ShipPageRightSide shipData={shipDataStore} positionsData={positionsDataStore} />
+			<MapLeaflet viewDataPositions={shipFullStore.positions} />
+			<ShipPageRightSide shipData={shipFullStore} />
 		</div>
 	)
 }

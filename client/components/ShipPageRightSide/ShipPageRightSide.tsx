@@ -3,30 +3,33 @@ import React from 'react'
 import styles from './ShipPageRightSide.module.scss';
 import { ShipPageRightSideProps } from './ShipPageRightSide.props';
 import { PositionListItem } from '../PositionListItem/PositionListItem';
+import { Checkbox } from '../Checkbox/Checkbox';
+import useOptionsStore from '@/redux/options/options.hook';
 //===========================================================================================================
 
 export default function HomePageRightSide(props: ShipPageRightSideProps) {
-	const { shipData, positionsData } = props;
+	const { shipData } = props;
+	const checkboxRef = React.useRef<HTMLInputElement>(null);
+	const { positionFilter, setPositionFilterByChecked } = useOptionsStore();
 
-	const updateFilterByType = (value: FiltersByType) => {
-		let newFilter: FiltersByType[] = filter.byType.includes(value)
-			? [...filter.byType].filter(obj => obj !== value)
-			: [...filter.byType, value];
-		setFilterByType(newFilter);
+	const updatePositionFilterByChecked = (value: number) => {
+		let newFilter: number[] = positionFilter.byChecked.includes(value)
+			? [...positionFilter.byChecked].filter(obj => obj !== value)
+			: [...positionFilter.byChecked, value];
+		setPositionFilterByChecked(newFilter);
 	}
 
-
-	if (shipData === null || positionsData === null) {
+	if (shipData === null) {
 		return null
 	}
 
 	return (
 		<div className={styles.mapRightSide}>
 			<details>
-				<summary>{`${shipData.name} (${shipData.acronym})`}</summary>
-				<p>{`type: ${shipData.type}`}</p>
-				<p>{`mmsi: ${shipData.mmsi}`}</p>
-				<p>{`base: ${shipData.base}`}</p>
+				<summary className={styles.summary}>{`${shipData.name} (${shipData.acronym})`}</summary>
+				<p className={styles.label}>{`type: ${shipData.type}`}</p>
+				<p className={styles.label}>{`mmsi: ${shipData.mmsi}`}</p>
+				<p className={styles.label} >{`base: ${shipData.base}`}</p>
 			</details>
 			<table className={styles.shipList}>
 				<thead className={styles.tableHead}>
@@ -40,11 +43,17 @@ export default function HomePageRightSide(props: ShipPageRightSideProps) {
 					</tr>
 				</thead>
 				<tbody className={styles.tableBody}>
-					{positionsData.map(obj =>
+					{shipData.positions.map(obj =>
 						<PositionListItem
 							key={obj.id}
 							shipPosition={obj}
-							onChange={() => updateStatusPosition(obj)} />)}
+						>
+							<Checkbox
+								onChange={() => updatePositionFilterByChecked(obj.id)}
+								isChecked={positionFilter.byChecked.includes(obj.id)}
+								ref={checkboxRef}
+								small />
+						</PositionListItem >)}
 				</tbody>
 			</table>
 		</div>

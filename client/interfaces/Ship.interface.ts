@@ -12,6 +12,7 @@ export interface IShip {
 	positions: IPosition[]
 }
 
+
 // export interface IRecenter extends ICoordinate {
 // 	coords: ICoordinate[];
 // 	setMapCenter: React.Dispatch<React.SetStateAction<ICoordinate>>

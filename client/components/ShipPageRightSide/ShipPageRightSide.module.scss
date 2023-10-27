@@ -18,5 +18,15 @@
 
 .tableBody {
 	transform: translateY(10px);
+	text-wrap: nowrap;
+}
+
+.summary {
+	margin-bottom: 5px;
+}
+
+.label {
+	font-size: 13px;
+	margin-left: 15px;
 }
 

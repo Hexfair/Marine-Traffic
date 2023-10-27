@@ -7,26 +7,26 @@ import { FilterButton } from '../FilterButton/FilterButton';
 import { FILTER_BY_TIME, FILTER_BY_TYPE, SORT } from './FilterBlock.constants';
 import useOptionsStore from '@/redux/options/options.hook';
 import { FiltersByTime, FiltersByType, SortType } from './FilterBlock.interfaces';
-import { Checkbox } from '../FilterCheckbox/Checkbox';
+import { Checkbox } from '../Checkbox/Checkbox';
 //=========================================================================================================================
 
 
 export const FilterBlock = () => {
 	const [isOpenFilter, setIsOpenFilter] = React.useState<boolean>(false);
-	const { filter, sort, setFilterByTime, setFilterByType, setSort } = useOptionsStore();
+	const { shipFilter: filter, sort, setShipFilterByTime, setShipFilterByType, setSort } = useOptionsStore();
 
 	const buttonRef = React.useRef<HTMLButtonElement>(null);
 	const checkboxRef = React.useRef<HTMLInputElement>(null);
 
 	const updateFilterByTime = (value: FiltersByTime) => {
-		setFilterByTime(value);
+		setShipFilterByTime(value);
 	}
 
 	const updateFilterByType = (value: FiltersByType) => {
 		let newFilter: FiltersByType[] = filter.byType.includes(value)
 			? [...filter.byType].filter(obj => obj !== value)
 			: [...filter.byType, value];
-		setFilterByType(newFilter);
+		setShipFilterByType(newFilter);
 	}
 
 	const updateSort = (value: SortType) => {

@@ -10,6 +10,7 @@ import socket from '@/configs/socket';
 import usePositionStore from '@/redux/position/position.hook';
 import useMapsStore from '@/redux/maps/maps.hook';
 import { ICoordinate } from '../MapLeaflet/MapLeaflet.interface';
+import Link from 'next/link';
 //===========================================================================================================
 
 export const ShipListItem = (props: ShipListItemProps) => {
@@ -43,15 +44,28 @@ export const ShipListItem = (props: ShipListItemProps) => {
 			<div className={styles.names}>{`(${shipItem.ship.acronym}) ${shipItem.ship.name}`}</div>
 			<div className={styles.type}>{shipItem.ship.type}</div>
 			<div className={styles.options}>
-				<button className={styles.buttonReaded} onClick={onChangeStatus}>
+				<button
+					className={styles.button}
+					onClick={onChangeStatus}
+					title='Mark as read'
+				>
 					{shipItem.isReaded ? <TrueReadedIcon /> : <FalseReadedIcon />}
 				</button>
-				<button className={styles.buttonShipTarget} onClick={() => updateMapCenter({ lat: shipItem.latitude, lng: shipItem.longitude })}>
+				<button
+					className={styles.button}
+					onClick={() => updateMapCenter({ lat: shipItem.latitude, lng: shipItem.longitude })}
+					title='Show on the map'
+				>
 					<ShipTargetIcon />
 				</button>
-				<button className={styles.buttonReaded} onClick={onChangeStatus}>
+				<Link
+					href={`/${shipItem.ship.mmsi}`}
+					target='_blank'
+					className={styles.button}
+					title='Activity details'
+				>
 					<RouteIcon />
-				</button>
+				</Link>
 			</div>
 		</li>
 	)

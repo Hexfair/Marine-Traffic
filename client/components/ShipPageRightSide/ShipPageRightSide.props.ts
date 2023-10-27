@@ -3,7 +3,5 @@ import { IShip } from "@/interfaces/Ship.interface";
 //===========================================================================================================
 
 export interface ShipPageRightSideProps {
-	shipData: Omit<IShip, 'positions'> | null,
-	positionsData: Omit<IPosition, 'ship'>[] | null,
-
+	shipData: IShip,
 }

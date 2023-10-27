@@ -5,13 +5,11 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 //===========================================================================================================
 
 export interface ShipSliceData {
-	shipDataStore: Omit<IShip, 'positions'> | null,
-	positionsDataStore: Omit<IPosition, 'ship'>[] | null,
+	shipFullStore: IShip | null,
 }
 
 const initialState: ShipSliceData = {
-	shipDataStore: null,
-	positionsDataStore: null,
+	shipFullStore: null,
 }
 
 const shipSlice = createSlice({
@@ -19,9 +17,7 @@ const shipSlice = createSlice({
 	initialState,
 	reducers: {
 		setShipFullDataReducer: (state, action: PayloadAction<IShip>) => {
-			const { positions, ...ship } = action.payload;
-			state.shipDataStore = ship;
-			state.positionsDataStore = positions;
+			state.shipFullStore = action.payload;
 		},
 	}
 })

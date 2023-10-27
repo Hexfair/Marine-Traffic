@@ -4,7 +4,7 @@ import { IShip } from "@/interfaces/Ship.interface";
 //===========================================================================================================
 
 const useShipStore = () => {
-	const { positionsDataStore, shipDataStore } = useAppSelector((state) => state.ship);
+	const { shipFullStore } = useAppSelector((state) => state.ship);
 	const dispatch = useAppDispatch();
 
 	const setShipFullData = (data: IShip) => {
@@ -12,8 +12,7 @@ const useShipStore = () => {
 	};
 
 	return {
-		positionsDataStore,
-		shipDataStore,
+		shipFullStore,
 		setShipFullData
 	};
 };

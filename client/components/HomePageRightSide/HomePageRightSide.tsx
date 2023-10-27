@@ -12,7 +12,7 @@ import socket from '@/configs/socket';
 
 export default function HomePageRightSide(props: HomePageRightSideProps) {
 	const { positionsDataStore, updateStatusAllPositions } = usePositionStore();
-	const { filter, sort } = useOptionsStore();
+	const { shipFilter, sort } = useOptionsStore();
 
 	const onChangeStatus = () => {
 		socket.emit("CLIENT:readed-all-positions");
@@ -36,12 +36,12 @@ export default function HomePageRightSide(props: HomePageRightSideProps) {
 			<ul className={styles.shipList}>
 				{positionsDataStore.length > 0 && positionsDataStore
 					.filter((obj) => {
-						if (filter.byTime !== 'all') {
-							return checkOldPosition(obj.latestTime, filter) && obj
+						if (shipFilter.byTime !== 'all') {
+							return checkOldPosition(obj.latestTime, shipFilter.byTime) && obj
 						}
 						return obj
 					})
-					.filter((obj) => filter.byType.includes(obj.ship.type))
+					.filter((obj) => shipFilter.byType.includes(obj.ship.type))
 					.filter((obj) => {
 						if (sort === 'oldest') {
 							return !obj.isReaded

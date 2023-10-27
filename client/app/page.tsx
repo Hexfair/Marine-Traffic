@@ -32,7 +32,7 @@ export default function Home() {
 
 	return (
 		<main className={styles.main}>
-			<MapLeaflet viewData={positionsDataStore} />
+			<MapLeaflet viewDataShips={positionsDataStore} />
 			<HomePageRightSide />
 		</main>
 	)

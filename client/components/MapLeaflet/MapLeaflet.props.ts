@@ -3,6 +3,6 @@ import { IShip } from "@/interfaces/Ship.interface";
 //===========================================================================================================
 
 export interface MapLeafletProps {
-	viewData: IPosition[];
-	isFullShipPage?: boolean;
+	viewDataShips?: IPosition[];
+	viewDataPositions?: Omit<IPosition, "ship">[];
 }
