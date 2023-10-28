@@ -37,7 +37,7 @@ export class PositionService {
 		const shipData = await this.positionRepository.find({
 			relations: { ship: true },
 			where: [{ ship: { mmsi: mmsi } }],
-			order: { createdAt: 'ASC' }
+			order: { latestTime: 'ASC' }
 		})
 
 		return shipData.at(-1);

@@ -22,10 +22,10 @@ export class Position {
 	@Column({ default: false })
 	isReaded: boolean;
 
-	@Column()
-	latestTime: number;
+	@Column({ type: 'timestamp with time zone' })
+	latestTime: Date;
 
-	@CreateDateColumn()
+	@CreateDateColumn({ type: 'timestamp with time zone' })
 	createdAt: Date;
 }
 

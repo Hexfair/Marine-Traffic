@@ -7,7 +7,7 @@ export interface IPosition {
 	longitude: number,
 	course: number,
 	isReaded: boolean,
-	latestTime: number,
+	latestTime: Date,
 	createdAt: Date,
 	ship: IShip,
 }

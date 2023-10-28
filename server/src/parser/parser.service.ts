@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Cron } from '@nestjs/schedule';
+import { Cron, Timeout } from '@nestjs/schedule';
 import puppeteer from 'puppeteer-core';
 import * as cheerio from 'cheerio';
 import * as dayjs from 'dayjs'
@@ -10,7 +10,6 @@ import { ShipService } from 'src/ship/ship.service';
 //===========================================================================================================
 dayjs.extend(utc)
 dayjs.extend(customParseFormat)
-dayjs.utc().format()
 const basicUrl = 'https://www.marinetraffic.com/en/data/?asset_type=vessels&columns=shipname,mmsi,time_of_latest_position,lat_of_latest_position,lon_of_latest_position,course';
 //===========================================================================================================
 
@@ -21,7 +20,7 @@ export class ParserService {
 		private readonly shipService: ShipService,
 	) { }
 
-	@Cron('0 0 */3 * * *')
+	@Cron('0 0 */4 * * *')
 	async handleCron() {
 		console.log('Время запуска парсера: ', dayjs().format('YYYY-MM-DD HH:mm'));
 
@@ -72,11 +71,11 @@ export class ParserService {
 					let latitude = $(item).find('div[col-id="lat_of_latest_position"] div div').text();
 					let longitude = $(item).find('div[col-id="lon_of_latest_position"] div div').text();
 					let course = $(item).find('div[col-id="course"] div div').text().split(' ')[0];
-					let latestTimeNumber = dayjs(latestTime, "YYYY-MM-DD HH:mm", true).valueOf();
+					let latestTimeDays = dayjs(`${latestTime} UTC`);
 
 					const positionData = {
 						mmsi: Number(mmsi),
-						latestTime: Number(latestTimeNumber) / 1000,
+						latestTime: new Date(latestTimeDays.toISOString()),
 						course: Number(course),
 						latitude,
 						longitude,
@@ -84,7 +83,7 @@ export class ParserService {
 
 					const checkShip = await this.positionService.findLastPosition(Number(mmsi));
 
-					if (!checkShip || Number(latestTimeNumber) / 1000 > Number(checkShip?.latestTime)) {
+					if (!checkShip || dayjs(positionData.latestTime).isAfter(dayjs(checkShip.latestTime))) {
 						await this.positionService.create(positionData)
 					}
 				}

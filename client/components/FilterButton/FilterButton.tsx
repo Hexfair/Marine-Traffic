@@ -5,7 +5,6 @@ import { FilterItemProps } from './FilterButton.props';
 
 export const FilterButton = React.forwardRef((props: FilterItemProps, ref: React.Ref<HTMLButtonElement>) => {
 	const { icon, text, isWide, className, ...rest } = props;
-	const [isOpenFilter, setIsOpenFilter] = React.useState<boolean>(false);
 
 	return (
 		<button

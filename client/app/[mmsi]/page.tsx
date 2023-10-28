@@ -1,7 +1,6 @@
 'use client'
 import React from 'react';
 import styles from './page.module.scss'
-import MapRightSide from '@/components/HomePageRightSide/HomePageRightSide';
 import useShipStore from '@/redux/ship/ship.hook';
 import MapLeaflet from '@/components/MapLeaflet/MapLeaflet';
 import { IShip } from '@/interfaces/Ship.interface';

@@ -5,6 +5,7 @@ import { ShipPageRightSideProps } from './ShipPageRightSide.props';
 import { PositionListItem } from '../PositionListItem/PositionListItem';
 import { Checkbox } from '../Checkbox/Checkbox';
 import useOptionsStore from '@/redux/options/options.hook';
+import { DatePicker } from '../Datepicker/Datepicker';
 //===========================================================================================================
 
 export default function HomePageRightSide(props: ShipPageRightSideProps) {
@@ -31,6 +32,7 @@ export default function HomePageRightSide(props: ShipPageRightSideProps) {
 				<p className={styles.label}>{`mmsi: ${shipData.mmsi}`}</p>
 				<p className={styles.label} >{`base: ${shipData.base}`}</p>
 			</details>
+			<DatePicker />
 			<table className={styles.shipList}>
 				<thead className={styles.tableHead}>
 					<tr>

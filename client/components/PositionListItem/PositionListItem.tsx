@@ -19,7 +19,7 @@ export const PositionListItem = (props: PositionListItemProps) => {
 			<td>{shipPosition.latitude}</td>
 			<td>{shipPosition.longitude}</td>
 			<td>{shipPosition.course}<sup>o</sup></td>
-			<td>{dayjs(shipPosition.latestTime * 1000).format('HH:mm D MMM YYYY')}</td>
+			<td>{dayjs(shipPosition.latestTime).format('HH:mm D MMM YYYY')}</td>
 			<td><DeleteIcon /></td>
 		</tr>
 	)

@@ -14,5 +14,5 @@ export class CreatePositionDto {
 	course: number;
 
 	@IsNumber()
-	latestTime: number;
+	latestTime: Date;
 }

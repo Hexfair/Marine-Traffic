@@ -23,7 +23,7 @@ export class ShipService {
 		});
 
 		const { positions, ...shipData } = ship;
-		positions.sort((a, b) => b.latestTime - a.latestTime).slice((page - 1) * 10, page * 10);
+		positions.sort((a, b) => b.latestTime.getTime() - a.latestTime.getTime());
 		return { ...shipData, positions };
 	}
 
