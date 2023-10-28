@@ -1,8 +1,6 @@
 import { WebSocketGateway, SubscribeMessage, MessageBody, WebSocketServer } from '@nestjs/websockets';
-import { CreateSocketDto } from './dto/create-socket.dto';
-import { UpdateSocketDto } from './dto/update-socket.dto';
 import { PositionService } from 'src/position/position.service';
-import { Server, Socket } from 'socket.io';
+import { Server } from 'socket.io';
 //===========================================================================================================
 
 @WebSocketGateway({
@@ -30,5 +28,24 @@ export class SocketGateway {
 		if (isUpdate.affected > 0) {
 			this.server.emit('SERVER:readed-all-positions');
 		}
+	}
+
+	/* Получение позиций корабля в пределах выбранных дат */
+	@SubscribeMessage('CLIENT:get-positions-date')
+	async findOneWithDates(@MessageBody() payload: { mmsi: number, dates: Date[] }) {
+		const shipPositions = await this.positionService.findPositions(payload.mmsi);
+		console.log('shipPositions', shipPositions);
+
+		const response = shipPositions.filter(obj => {
+			const checkStartDate = new Date(obj.latestTime) > new Date(payload.dates[0]);
+			const checkEndDate = new Date(obj.latestTime) < new Date(payload.dates[1]);
+			if (checkStartDate && checkEndDate) {
+				return obj
+			}
+		});
+
+		response.length > 0
+			? this.server.emit('SERVER:get-positions-date', response)
+			: this.server.emit('SERVER:get-positions-date', null);
 	}
 }

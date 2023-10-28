@@ -1,6 +1,7 @@
-import { setShipFullDataReducer } from "./ship.slice"
+import { setShipFullDataReducer, setPositionsByDateReducer } from "./ship.slice"
 import { useAppDispatch, useAppSelector } from "../store";
 import { IShip } from "@/interfaces/Ship.interface";
+import { IPosition } from "@/interfaces/Position.interface";
 //===========================================================================================================
 
 const useShipStore = () => {
@@ -11,9 +12,14 @@ const useShipStore = () => {
 		dispatch(setShipFullDataReducer(data));
 	};
 
+	const updatePositionsByDate = (data: IPosition[] | null) => {
+		dispatch(setPositionsByDateReducer(data));
+	};
+
 	return {
 		shipFullStore,
-		setShipFullData
+		setShipFullData,
+		updatePositionsByDate
 	};
 };
 

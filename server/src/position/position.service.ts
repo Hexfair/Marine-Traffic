@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreatePositionDto } from './dto/create-position.dto';
-import { UpdatePositionDto } from './dto/update-position.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ShipService } from 'src/ship/ship.service';
 import { Position } from './position.entity';
@@ -41,6 +40,14 @@ export class PositionService {
 		})
 
 		return shipData.at(-1);
+	}
+
+	/* Получение всех позиций конкретного корабля */
+	async findPositions(mmsi: number) {
+		return await this.positionRepository.find({
+			where: [{ ship: { mmsi: mmsi } }],
+			order: { latestTime: 'ASC' }
+		})
 	}
 
 	/* Получение всех кораблей с их последними позициями */

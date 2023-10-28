@@ -11,20 +11,10 @@ export class ShipController {
 	// 	return this.shipService.create(createShipDto);
 	// }
 
-	@Get()
-	findAll() {
-		return this.shipService.findAll();
-	}
-
 	@Post(':mmsi')
 	findOneWithPagination(@Param('mmsi') mmsi: string, @Body() page: number) {
 		return this.shipService.findOneWithPagination(Number(mmsi), page);
 	}
-
-	// @Get(':mmsi')
-	// findOneWithPagination(@Param('mmsi') mmsi: string) {
-	// 	return this.shipService.findOneWithPagination(Number(mmsi));
-	// }
 
 	// @Patch(':id')
 	// update(@Param('id') id: string, @Body() updateShipDto: UpdateShipDto) {

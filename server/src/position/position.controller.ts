@@ -22,10 +22,10 @@ export class PositionController {
 	// 	return this.positionService.findOne(+id);
 	// }
 
-	@Get(':id')
-	findLastPosition(@Param('id') id: string) {
-		return this.positionService.findLastPosition(+id);
-	}
+	// @Get(':id')
+	// findLastPosition(@Param('id') id: string) {
+	// 	return this.positionService.findLastPosition(+id);
+	// }
 
 	// @Patch(':id')
 	// update(@Param('id') id: string, @Body() updatePositionDto: UpdatePositionDto) {

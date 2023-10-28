@@ -1,7 +1,7 @@
-import { DetailedHTMLProps, HTMLAttributes, ReactNode } from 'react';
+import { DetailedHTMLProps, Dispatch, HTMLAttributes, ReactNode, SetStateAction } from 'react';
 //===========================================================================================================
 
 export interface DatePickerProps {
-
-	// setMyVar?: Dispatch<SetStateAction<boolean>>;
+	dateRange: Date[];
+	setDateRange: Dispatch<SetStateAction<Date[]>>;
 }

@@ -21,12 +21,50 @@
 	text-wrap: nowrap;
 }
 
-.summary {
-	margin-bottom: 5px;
+.details {
+	margin: 0 auto;
+
+	.summary {
+		margin-bottom: 5px;
+		font-size: 20px;
+		font-weight: 600;
+		background-color: var(--red-light);
+		padding: 5px 10px;
+	}
+	
+	.label {
+		font-size: 13px;
+		margin-left: 15px;
+	}
 }
 
-.label {
-	font-size: 13px;
-	margin-left: 15px;
+
+.dateOptions {
+	display: flex;
+	align-items: center;
+	column-gap: 20px;
 }
 
+.allReadedButton {
+	margin: 10px 0px;
+	padding: 8px;
+	max-width: 100px;
+	background-color: var(--button);
+	transition: all 0.3s ease 0s;
+	border-radius: 3px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--button-hover);
+	}
+
+	&:active {
+		transform: translateY(3px);
+	}
+}
+
+.divider {
+	border-bottom: 1px dotted var(--divider);
+	margin: 5px auto;
+	width: 100%;
+}

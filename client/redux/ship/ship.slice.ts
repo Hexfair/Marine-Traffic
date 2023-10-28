@@ -19,8 +19,16 @@ const shipSlice = createSlice({
 		setShipFullDataReducer: (state, action: PayloadAction<IShip>) => {
 			state.shipFullStore = action.payload;
 		},
+		setPositionsByDateReducer: (state, action: PayloadAction<IPosition[] | null>) => {
+			if (state.shipFullStore && action.payload) {
+				state.shipFullStore.positions = action.payload;
+			}
+			if (state.shipFullStore && action.payload === null) {
+				state.shipFullStore.positions = [];
+			}
+		},
 	}
 })
 
-export const { setShipFullDataReducer } = shipSlice.actions;
+export const { setShipFullDataReducer, setPositionsByDateReducer } = shipSlice.actions;
 export default shipSlice.reducer;

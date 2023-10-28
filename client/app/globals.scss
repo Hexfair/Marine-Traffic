@@ -36,6 +36,7 @@ a {
 	--red-light: #fce2e9;
 }
 
+/* Custom Leaflet CSS */
 .leaflet-container {
 	width: 100% !important;
 	height: 95vh !important;
@@ -47,4 +48,22 @@ a {
 
 .leaflet-interactive {
 	stroke-width: 2;
+}
+
+/* Custom Leaflet CSS */
+.react-datepicker__view-calendar-icon {
+	display: flex !important;
+	align-items: center !important;
+	justify-content: left !important;
+}
+
+.react-datepicker__view-calendar-icon input {
+	padding-left: 30px !important;
+	border: 1px solid var(--text-secondary);
+	border-radius: 3px;
+}
+
+.react-datepicker__close-icon {
+	position: static !important;
+	margin-left: 8px !important;
 }
