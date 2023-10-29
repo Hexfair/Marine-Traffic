@@ -3,6 +3,7 @@ import positionReducer from "./position/position.slice";
 import optionsReducer from "./options/options.slice";
 import mapsReducer from "./maps/maps.slice";
 import shipReduces from "./ship/ship.slice";
+import modalReducer from "./modal/modal.slice";
 import { useDispatch, useSelector } from 'react-redux';
 import type { TypedUseSelectorHook } from 'react-redux';
 //===========================================================================================================
@@ -12,7 +13,8 @@ export const store = configureStore({
 		position: positionReducer,
 		options: optionsReducer,
 		maps: mapsReducer,
-		ship: shipReduces
+		ship: shipReduces,
+		modal: modalReducer
 	},
 });
 

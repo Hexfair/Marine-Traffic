@@ -5,18 +5,22 @@ import { ShipListItemProps } from './ShipListItem.props';
 import FalseReadedIcon from '@/public/Icons/isReaded-false.svg';
 import TrueReadedIcon from '@/public/Icons/isReaded-true.svg';
 import ShipTargetIcon from '@/public/Icons/ship-target.svg';
+import EditIcon from '@/public/Icons/edit.svg';
 import RouteIcon from '@/public/Icons/route.svg';
 import socket from '@/configs/socket';
 import usePositionStore from '@/redux/position/position.hook';
 import useMapsStore from '@/redux/maps/maps.hook';
 import { ICoordinate } from '../MapLeaflet/MapLeaflet.interface';
 import Link from 'next/link';
+import useModalStore from '@/redux/modal/modal.hook';
 //===========================================================================================================
 
 export const ShipListItem = (props: ShipListItemProps) => {
 	const { shipItem } = props;
 	const { updateStatusPosition } = usePositionStore();
 	const { updateMapsCenter } = useMapsStore();
+	const { setUpdateModalStatus } = useModalStore();
+
 
 	const onChangeStatus = () => {
 		socket.emit("CLIENT:readed-position", { id: shipItem.ship.id });
@@ -24,6 +28,22 @@ export const ShipListItem = (props: ShipListItemProps) => {
 
 	const updateMapCenter = (value: ICoordinate) => {
 		updateMapsCenter(value);
+	}
+
+	const updateModalStatus = () => {
+		const data = {
+			isOpen: true,
+			isEdit: true,
+			ship: {
+				id: shipItem.ship.id,
+				mmsi: shipItem.ship.mmsi,
+				name: shipItem.ship.name,
+				base: shipItem.ship.base,
+				acronym: shipItem.ship.acronym,
+				type: shipItem.ship.type,
+			}
+		}
+		setUpdateModalStatus(data);
 	}
 
 	React.useEffect(() => {
@@ -66,6 +86,13 @@ export const ShipListItem = (props: ShipListItemProps) => {
 				>
 					<RouteIcon />
 				</Link>
+				<button
+					className={styles.button}
+					onClick={updateModalStatus}
+					title='Edit data ship'
+				>
+					<EditIcon />
+				</button>
 			</div>
 		</li>
 	)

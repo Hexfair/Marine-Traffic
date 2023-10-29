@@ -1,0 +1,23 @@
+.button {
+	margin: 10px 0px;
+	padding: 8px;
+	max-width: 120px;
+	width: 100%;
+	background-color: var(--button);
+	transition: all 0.3s ease 0s;
+	border-radius: 3px;
+	cursor: pointer;
+
+	&:hover {
+		background-color: var(--button-hover);
+	}
+
+	&:active {
+		transform: translateY(3px);
+	}
+
+	&.wide {
+		max-width: none;
+		width: auto;
+	}
+}

@@ -34,6 +34,7 @@ a {
 	--button-hover: #c98bfc;
 	--red-dark: #DC143C;
 	--red-light: #fce2e9;
+	--red-extra-light:rgb(253, 242, 245);
 }
 
 /* Custom Leaflet CSS */
@@ -66,4 +67,9 @@ a {
 .react-datepicker__close-icon {
 	position: static !important;
 	margin-left: 8px !important;
+}
+
+.ReactModalPortal {
+	z-index: 1000 !important;
+	position: absolute !important;
 }

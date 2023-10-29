@@ -10,6 +10,7 @@ import { setInitialDates } from '@/helpers/set-initial-dates';
 import socket from '@/configs/socket';
 import { IPosition } from '@/interfaces/Position.interface';
 import useShipStore from '@/redux/ship/ship.hook';
+import { Button } from '../Button/Button';
 //===========================================================================================================
 
 export default function HomePageRightSide(props: ShipPageRightSideProps) {
@@ -58,7 +59,7 @@ export default function HomePageRightSide(props: ShipPageRightSideProps) {
 			</details>
 			<div className={styles.dateOptions}>
 				<DatePicker dateRange={dateRange} setDateRange={setDateRange} />
-				<button className={styles.allReadedButton} onClick={getPositionsByDates}>Set Date</button>
+				<Button text='Set Date' onClick={getPositionsByDates} />
 			</div>
 			<hr className={styles.divider} />
 			<table className={styles.shipList}>

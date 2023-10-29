@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Ship } from './ship.entity';
 import { Repository } from 'typeorm';
+import { CreateShipDto } from './ship-create.dto';
+import { UpdateShipDto } from './ship-update.dto';
 //===========================================================================================================
 
 
@@ -33,9 +35,44 @@ export class ShipService {
 		});
 	}
 
-	// update(id: number, updateShipDto: UpdateShipDto) {
-	// 	return `This action updates a #${id} ship`;
-	// }
+	async create(shipData: CreateShipDto) {
+		const checkShipMMSI = await this.shipRepository.findOne({
+			where: { mmsi: shipData.mmsi },
+		});
+
+		if (checkShipMMSI) {
+			throw new BadRequestException('Ошибка при сохранении данных. Возможно, такой MMSI уже есть в базе');
+		}
+
+		return await this.shipRepository.save(shipData);
+	}
+
+	async update(updateShipDto: UpdateShipDto) {
+		const checkShipId = await this.shipRepository.findOne({
+			where: { id: updateShipDto.id },
+		});
+
+		const checkShipMMSI = await this.shipRepository.findOne({
+			where: { mmsi: updateShipDto.mmsi },
+		});
+
+		if (!checkShipId || checkShipId.mmsi !== checkShipMMSI.mmsi) {
+			throw new BadRequestException('Ошибка при обновлении данных. Возможно, вы указали неправильный номер MMSI');
+		}
+
+		return await this.shipRepository
+			.createQueryBuilder()
+			.update(Ship)
+			.set({
+				mmsi: updateShipDto.mmsi,
+				name: updateShipDto.name,
+				base: updateShipDto.base,
+				acronym: updateShipDto.acronym,
+				type: updateShipDto.type,
+			})
+			.where("id = :id", { id: updateShipDto.id })
+			.execute();
+	}
 
 	// remove(id: number) {
 	// 	return `This action removes a #${id} ship`;

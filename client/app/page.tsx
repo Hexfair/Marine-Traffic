@@ -6,6 +6,7 @@ import { IPosition } from '@/interfaces/Position.interface';
 import HomePageRightSide from '@/components/HomePageRightSide/HomePageRightSide';
 import usePositionStore from '@/redux/position/position.hook';
 import socket from '@/configs/socket';
+import { ModalItem } from '@/components/Modal/Modal';
 const MapLeaflet = dynamic(() => import("@/components/MapLeaflet/MapLeaflet"), { ssr: false });
 //===========================================================================================================
 
@@ -31,9 +32,12 @@ export default function Home() {
 	};
 
 	return (
-		<main className={styles.main}>
-			<MapLeaflet viewDataShips={positionsDataStore} />
-			<HomePageRightSide />
-		</main>
+		<>
+			<main className={styles.main}>
+				<MapLeaflet viewDataShips={positionsDataStore} />
+				<HomePageRightSide />
+			</main>
+			<ModalItem />
+		</>
 	)
 }

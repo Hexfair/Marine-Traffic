@@ -8,11 +8,24 @@ import { checkOldPosition } from '@/helpers/check-old-position.helper';
 import { FilterBlock } from '../FilterBlock/FilterBlock';
 import useOptionsStore from '@/redux/options/options.hook';
 import socket from '@/configs/socket';
+import useModalStore from '@/redux/modal/modal.hook';
+import { Button } from '../Button/Button';
 //===========================================================================================================
 
 export default function HomePageRightSide(props: HomePageRightSideProps) {
 	const { positionsDataStore, updateStatusAllPositions } = usePositionStore();
 	const { shipFilter, sort } = useOptionsStore();
+	const { setUpdateModalStatus } = useModalStore();
+
+
+	const updateModalStatus = () => {
+		const data = {
+			isOpen: true,
+			isEdit: false,
+			ship: null
+		}
+		setUpdateModalStatus(data);
+	}
 
 	const onChangeStatus = () => {
 		socket.emit("CLIENT:readed-all-positions");
@@ -32,7 +45,7 @@ export default function HomePageRightSide(props: HomePageRightSideProps) {
 	return (
 		<div className={styles.mapRightSide}>
 			<FilterBlock />
-			<button className={styles.allReadedButton} onClick={onChangeStatus}>Readed All</button>
+			<Button text='Readed All' onClick={onChangeStatus} />
 			<ul className={styles.shipList}>
 				{positionsDataStore.length > 0 && positionsDataStore
 					.filter((obj) => {
@@ -75,6 +88,7 @@ export default function HomePageRightSide(props: HomePageRightSideProps) {
 						/>
 					)}
 			</ul>
+			<Button text='Add a new ship to the database' onClick={updateModalStatus} wide />
 		</div>
 	)
 }
