@@ -7,6 +7,7 @@ import HomePageRightSide from '@/components/HomePageRightSide/HomePageRightSide'
 import usePositionStore from '@/redux/position/position.hook';
 import socket from '@/configs/socket';
 import { ModalItem } from '@/components/Modal/Modal';
+import ElemSpinner from '@/components/ElemSpinner/ElemSpinner';
 const MapLeaflet = dynamic(() => import("@/components/MapLeaflet/MapLeaflet"), { ssr: false });
 //===========================================================================================================
 
@@ -28,7 +29,7 @@ export default function Home() {
 	}, []);
 
 	if (positionsDataStore.length === 0) {
-		return <p>LOADING</p>
+		return <ElemSpinner />
 	};
 
 	return (

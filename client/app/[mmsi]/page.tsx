@@ -7,6 +7,7 @@ import { IShip } from '@/interfaces/Ship.interface';
 import ShipPageRightSide from '@/components/ShipPageRightSide/ShipPageRightSide';
 import useOptionsStore from '@/redux/options/options.hook';
 import useMapsStore from '@/redux/maps/maps.hook';
+import ElemSpinner from '@/components/ElemSpinner/ElemSpinner';
 //===========================================================================================================
 
 export default function ShipPage({ params }: { params: { mmsi: string } }) {
@@ -42,7 +43,7 @@ export default function ShipPage({ params }: { params: { mmsi: string } }) {
 	}, [])
 
 	if (shipFullStore === null) {
-		return <p>LOADING</p>
+		return <ElemSpinner />
 	}
 
 	return (

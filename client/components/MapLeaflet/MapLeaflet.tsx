@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
+import styles from './MapLeaflet.module.scss';
 import "leaflet.offline";
 import L from "leaflet";
 import { MapContainer, TileLayer, Polygon, Popup, Polyline, Marker } from 'react-leaflet'
@@ -8,12 +9,14 @@ import { MapLeafletProps } from './MapLeaflet.props';
 import MapRecenter from './Plugins/MapRecenter';
 import { ShipReadedIcon, ShipNewIcon, ShipSelectedIcon, CircleIcon } from './MapLeaflet.icons';
 import "leaflet-rotatedmarker";
-import { checkOldPosition } from '@/helpers/check-old-position.helper';
 import useOptionsStore from '@/redux/options/options.hook';
 import useMapsStore from '@/redux/maps/maps.hook';
 import { mapFilterShips } from '@/helpers/map-filter-ships.helper';
 import { mapFilterPositions } from '@/helpers/map-filter-positions.helper';
 import { mapPolylinePositions } from '@/helpers/map-polyline-positions.helper';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 //===========================================================================================================
 
 export default function MapLeaflet(props: MapLeafletProps) {
@@ -50,10 +53,22 @@ export default function MapLeaflet(props: MapLeafletProps) {
 						rotationAngle={obj.course}
 						rotationOrigin='center center'
 					>
-						<Popup children={<div><p>{`Координаты: ${obj.latitude}, ${obj.longitude}`}</p>
-							<p>{obj.ship.acronym}</p>
-							<p>{obj.ship.name}</p>
-						</div>} />
+						<Popup children={
+							<div className={styles.popup}>
+								<p className={styles.title}>{`(${obj.ship.acronym}) ${obj.ship.name}`}</p>
+								<p className={styles.coords}>
+									<span>Координаты: </span>
+									<span>{`${obj.latitude}, ${obj.longitude}`}</span>
+								</p>
+								<p className={styles.date}>
+									<span>Дата: </span>
+									<span>{dayjs(obj.latestTime).format("HH:mm DD-MM-YYYY")}</span>
+								</p>
+								<p className={styles.date}>
+									<span>Дата UTC: </span>
+									<span>{dayjs.utc(obj.latestTime).format("HH:mm DD-MM-YYYY")}</span>
+								</p>
+							</div>} />
 					</Marker>)}
 				{viewDataPositions &&
 					<>
@@ -64,7 +79,21 @@ export default function MapLeaflet(props: MapLeafletProps) {
 							rotationAngle={obj.course}
 							rotationOrigin='center center'
 						>
-							<Popup children={<p>{`Координаты: ${obj.latitude}, ${obj.longitude}`}</p>} />
+							<Popup children={
+								<div className={styles.popup}>
+									<p className={styles.coords}>
+										<span>Координаты: </span>
+										<span>{`${obj.latitude}, ${obj.longitude}`}</span>
+									</p>
+									<p className={styles.date}>
+										<span>Дата: </span>
+										<span>{dayjs(obj.latestTime).format("HH:mm DD-MM-YYYY")}</span>
+									</p>
+									<p className={styles.date}>
+										<span>Дата UTC: </span>
+										<span>{dayjs.utc(obj.latestTime).format("HH:mm DD-MM-YYYY")}</span>
+									</p>
+								</div>} />
 						</Marker>)}
 						<Polyline pathOptions={{ color: 'black' }} positions={mapPolylinePositions(viewDataPositions, positionFilter)} />
 					</>

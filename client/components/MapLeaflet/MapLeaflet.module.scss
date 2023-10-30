@@ -1,5 +1,31 @@
-.newShipIcon {
-	width: 25px;
-	height: 25px;
+.popup {
+
 }
 
+.title {
+	font-size: 14px;
+	font-weight: 600;
+	margin-bottom: 8px !important;
+}
+
+.coords {
+	margin: 0 !important;
+	display: flex;
+	justify-content: space-between;
+	column-gap: 10px;
+}
+
+.text {
+	margin: 0 !important;
+	display: flex;
+	justify-content: space-between;
+	column-gap: 10px;
+
+}
+
+.date {
+	margin: 0 !important;
+	display: flex;
+	justify-content: space-between;
+	column-gap: 10px;
+}

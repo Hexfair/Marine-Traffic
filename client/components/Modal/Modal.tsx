@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import useModalStore from '@/redux/modal/modal.hook';
 import { Button } from '../Button/Button';
 import { IShipMainData } from '@/interfaces/Ship.interface';
+import ElemSpinner from '../ElemSpinner/ElemSpinner';
 //=========================================================================================================================
 
 export const ModalItem = () => {
@@ -86,7 +87,7 @@ export const ModalItem = () => {
 	}
 
 	if (isEdit && ships.length === 0) {
-		return <div>LOADINGGGGGGGGGGGG</div>
+		return <ElemSpinner />
 	}
 
 	return (

@@ -1,5 +1,6 @@
 import { FiltersByType } from "@/components/FilterBlock/FilterBlock.interfaces";
 import { IPosition } from "./Position.interface";
+//=========================================================================================================================
 
 export interface IShip {
 	id: number,
