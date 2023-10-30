@@ -30,22 +30,6 @@ export const ShipListItem = (props: ShipListItemProps) => {
 		updateMapsCenter(value);
 	}
 
-	const updateModalStatus = () => {
-		const data = {
-			isOpen: true,
-			isEdit: true,
-			ship: {
-				id: shipItem.ship.id,
-				mmsi: shipItem.ship.mmsi,
-				name: shipItem.ship.name,
-				base: shipItem.ship.base,
-				acronym: shipItem.ship.acronym,
-				type: shipItem.ship.type,
-			}
-		}
-		setUpdateModalStatus(data);
-	}
-
 	React.useEffect(() => {
 		// Обновление статуса (прочитано)
 		const serverReadedPosition = (value: number) => value === shipItem.ship.id && updateStatusPosition(value);
@@ -86,13 +70,6 @@ export const ShipListItem = (props: ShipListItemProps) => {
 				>
 					<RouteIcon />
 				</Link>
-				<button
-					className={styles.button}
-					onClick={updateModalStatus}
-					title='Edit data ship'
-				>
-					<EditIcon />
-				</button>
 			</div>
 		</li>
 	)

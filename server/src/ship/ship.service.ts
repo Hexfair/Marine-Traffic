@@ -18,6 +18,22 @@ export class ShipService {
 		return await this.shipRepository.find();
 	}
 
+	async findAllByEdit() {
+		const shipsFull = await this.shipRepository.find({ order: { acronym: 'ASC' } });
+		const shipsResult = shipsFull.map(obj => {
+			const data = {
+				id: obj.id,
+				mmsi: obj.mmsi,
+				name: obj.name,
+				base: obj.base,
+				acronym: obj.acronym,
+				type: obj.type,
+			}
+			return data;
+		})
+		return shipsResult;
+	}
+
 	async findOneWithPagination(mmsi: number, page: number) {
 		const ship = await this.shipRepository.findOne({
 			relations: { positions: true },

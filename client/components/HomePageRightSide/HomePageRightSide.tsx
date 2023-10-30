@@ -18,13 +18,12 @@ export default function HomePageRightSide(props: HomePageRightSideProps) {
 	const { setUpdateModalStatus } = useModalStore();
 
 
-	const updateModalStatus = () => {
-		const data = {
-			isOpen: true,
-			isEdit: false,
-			ship: null
-		}
-		setUpdateModalStatus(data);
+	const openModalForAdd = () => {
+		setUpdateModalStatus({ isOpen: true, isEdit: false });
+	}
+
+	const openModalForEdit = () => {
+		setUpdateModalStatus({ isOpen: true, isEdit: true });
 	}
 
 	const onChangeStatus = () => {
@@ -88,7 +87,8 @@ export default function HomePageRightSide(props: HomePageRightSideProps) {
 						/>
 					)}
 			</ul>
-			<Button text='Add a new ship to the database' onClick={updateModalStatus} wide />
+			<Button text='Add a new ship to the database' onClick={openModalForAdd} wide />
+			<Button text='Edit ship in database' onClick={openModalForEdit} wide />
 		</div>
 	)
 }

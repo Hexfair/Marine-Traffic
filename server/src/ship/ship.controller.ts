@@ -8,6 +8,11 @@ import { UpdateShipDto } from './ship-update.dto';
 export class ShipController {
 	constructor(private readonly shipService: ShipService) { }
 
+	@Get()
+	findAll() {
+		return this.shipService.findAllByEdit();
+	}
+
 	@Post()
 	create(@Body() createShipDto: CreateShipDto) {
 		return this.shipService.create(createShipDto);

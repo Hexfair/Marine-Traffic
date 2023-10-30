@@ -7,26 +7,28 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 export interface ModalSliceData {
 	isOpen: boolean;
 	isEdit: boolean;
-	ship: IShipMainData | null;
+	ships: IShipMainData[];
 }
 
 const initialState: ModalSliceData = {
 	isOpen: false,
 	isEdit: false,
-	ship: null
+	ships: []
 }
 
 const modalSlice = createSlice({
 	name: 'modal',
 	initialState,
 	reducers: {
-		updateModalViewReducer: (state, action: PayloadAction<ModalSliceData>) => {
+		updateModalViewReducer: (state, action: PayloadAction<Omit<ModalSliceData, 'ships'>>) => {
 			state.isOpen = action.payload.isOpen;
 			state.isEdit = action.payload.isEdit;
-			state.ship = action.payload.ship;
+		},
+		updateModalShipsReducer: (state, action: PayloadAction<IShipMainData[]>) => {
+			state.ships = action.payload;
 		},
 	}
 })
 
-export const { updateModalViewReducer } = modalSlice.actions;
+export const { updateModalViewReducer, updateModalShipsReducer } = modalSlice.actions;
 export default modalSlice.reducer;

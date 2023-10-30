@@ -34,7 +34,6 @@ export class SocketGateway {
 	@SubscribeMessage('CLIENT:get-positions-date')
 	async findOneWithDates(@MessageBody() payload: { mmsi: number, dates: Date[] }) {
 		const shipPositions = await this.positionService.findPositions(payload.mmsi);
-		console.log('shipPositions', shipPositions);
 
 		const response = shipPositions.filter(obj => {
 			const checkStartDate = new Date(obj.latestTime) > new Date(payload.dates[0]);
