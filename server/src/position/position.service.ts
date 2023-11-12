@@ -56,7 +56,9 @@ export class PositionService {
 		const allShipsWithLastPosition = await Promise.all(
 			allShipsData.map(async (obj) => await this.findLastPosition(obj.mmsi)));
 
-		return allShipsWithLastPosition.filter(obj => obj);
+		const uniqueData = Array.from(new Set(allShipsWithLastPosition.filter(obj => obj).map(obj => JSON.stringify(obj))));
+
+		return uniqueData.map(obj => JSON.parse(obj));
 	}
 
 	async update(id: number) {

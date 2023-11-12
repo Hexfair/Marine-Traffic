@@ -35,12 +35,14 @@ export class ShipService {
 	}
 
 	async findOneWithPagination(mmsi: number, page: number) {
-		const ship = await this.shipRepository.findOne({
+		const ship = await this.shipRepository.find({
 			relations: { positions: true },
 			where: { mmsi },
 		});
 
-		const { positions, ...shipData } = ship;
+		ship.sort((a, b) => b.positions.length - a.positions.length);
+
+		const { positions, ...shipData } = ship[0];
 		positions.sort((a, b) => b.latestTime.getTime() - a.latestTime.getTime());
 		return { ...shipData, positions };
 	}

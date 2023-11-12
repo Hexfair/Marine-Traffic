@@ -13,6 +13,9 @@ export class Ship {
 	id: number;
 
 	@Column({ unique: true })
+	shipId: number;
+
+	@Column()
 	mmsi: number;
 
 	@Column()
@@ -21,7 +24,7 @@ export class Ship {
 	@Column()
 	base: string;
 
-	@Column({ unique: true })
+	@Column()
 	acronym: string;
 
 	@Column()

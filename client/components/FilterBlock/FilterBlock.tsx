@@ -96,7 +96,7 @@ export const FilterBlock = () => {
 				</div>
 				<p className={styles.filterTextOption}>Filter by type:</p>
 				<div className={styles.byType}>
-					{FILTER_BY_TYPE.sort().map((obj) =>
+					{FILTER_BY_TYPE.toSorted().map((obj) =>
 						<Checkbox
 							key={obj}
 							label={obj}

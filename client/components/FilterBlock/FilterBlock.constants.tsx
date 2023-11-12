@@ -34,7 +34,7 @@ export const FILTER_BY_TIME: IFilterByTime[] = [
 export const FILTER_BY_TYPE: FiltersByType[] = ['Submarine Tenders', 'Guided Missile Cruisers', 'Aircraft Carriers',
 	'Guided Missile Destroyers', 'Expeditionary Sea Base', 'Amphibious Command Ships',
 	'Littoral Combat Ships', 'Amphibious Assault Ships', 'Amphibious Transport Dock', 'Dock Landing Ships',
-	'Mine Countermeasures Ships', 'Ballistic Missile Submarines', 'Guided Missile Submarines', 'Attack Submarines', 'Saildrone Voyager']
+	'Mine Countermeasures Ships', 'Ballistic Missile Submarines', 'Guided Missile Submarines', 'Attack Submarines', 'Saildrone Voyager', 'Offshore Supply Ship']
 
 export const SORT: ISort[] = [
 	{

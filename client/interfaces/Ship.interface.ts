@@ -4,6 +4,7 @@ import { IPosition } from "./Position.interface";
 
 export interface IShip {
 	id: number,
+	shipId: number,
 	mmsi: number,
 	name: string,
 	base: string,
@@ -15,6 +16,7 @@ export interface IShip {
 
 export interface IShipMainData {
 	id: number,
+	shipId: number,
 	mmsi: number,
 	name: string,
 	base: string,

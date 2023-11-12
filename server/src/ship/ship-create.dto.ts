@@ -2,6 +2,9 @@ import { IsNumber, IsString } from "class-validator";
 
 export class CreateShipDto {
 	@IsNumber()
+	shipId: number;
+
+	@IsNumber()
 	mmsi: number;
 
 	@IsString()

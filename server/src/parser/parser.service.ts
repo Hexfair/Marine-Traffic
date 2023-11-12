@@ -8,10 +8,15 @@ import * as utc from 'dayjs/plugin/utc';
 import { PositionService } from 'src/position/position.service';
 import { ShipService } from 'src/ship/ship.service';
 //===========================================================================================================
-dayjs.extend(utc)
-dayjs.extend(customParseFormat)
-const basicUrl = 'https://www.marinetraffic.com/en/data/?asset_type=vessels&columns=shipname,mmsi,time_of_latest_position,lat_of_latest_position,lon_of_latest_position,course';
+dayjs.extend(utc);
+dayjs.extend(customParseFormat);
+//const basicUrl = 'https://www.marinetraffic.com/en/data/?asset_type=vessels&columns=shipname,mmsi,time_of_latest_position,lat_of_latest_position,lon_of_latest_position,course';
+const basicUrl = 'https://www.marinetraffic.com/en/data/?asset_type=vessels&columns=shipname%2Cmmsi%2Ctime_of_latest_position%2Clat_of_latest_position%2Clon_of_latest_position%2Ccourse&quicksearch_shipid=';
 //===========================================================================================================
+
+//https://www.marinetraffic.com/en/data/?asset_type=vessels&columns=shipname%2Cmmsi%2Ctime_of_latest_position%2Clat_of_latest_position%2Clon_of_latest_position%2Ccourse&quicksearch_shipid=6101903,455238,6715978
+
+
 
 @Injectable()
 export class ParserService {
@@ -20,16 +25,17 @@ export class ParserService {
 		private readonly shipService: ShipService,
 	) { }
 
-	@Cron('0 0 */4 * * *')
+	//@Cron('0 0 */4 * * *')
+	//@Timeout(2000)
 	async handleCron() {
 		console.log('Время запуска парсера: ', dayjs().format('YYYY-MM-DD HH:mm'));
 
 		const allShipsData = await this.shipService.findAll();
-		const allShipsQueryMMSI = allShipsData.map((obj) => '&mmsi|eq|mmsi=' + obj.mmsi);
+		const allShipsQueryMMSI = allShipsData.map((obj) => obj.shipId);
 
 		const queryItems: string[] = [];
 		for (let i = 0; i < allShipsQueryMMSI.length; i += 10) {
-			const chunk = allShipsQueryMMSI.slice(i, i + 10).join('');
+			const chunk = allShipsQueryMMSI.slice(i, i + 10).join(',');
 			queryItems.push(chunk);
 		}
 
@@ -39,11 +45,11 @@ export class ParserService {
 			channel: 'chrome',
 		});
 		const page = await browser.newPage();
-		page.setDefaultNavigationTimeout(0);
+		page.setDefaultNavigationTimeout(50000);
 
 		let itemsIndex = 0;
 		const timerId = setInterval(() => {
-			console.log(`ЗАГРУЗКА ${itemsIndex + 1}`);
+			console.log(`ЗАГРУЗКА ${itemsIndex + 1} из ${queryItems.length}`);
 			fetch(queryItems[itemsIndex]);
 			itemsIndex = itemsIndex + 1;
 			if (itemsIndex === queryItems.length) {
@@ -53,30 +59,36 @@ export class ParserService {
 					await browser.close();
 				}, 40000);
 			}
-		}, 60000);
+		}, 30000);
 
 		const fetch = async (params: string) => {
 			try {
 				await page.goto(basicUrl + params, { waitUntil: 'networkidle0' });
 				await page.setViewport({ width: 1680, height: 1220 });
 
+				const acceptBtn = await page.$("button[mode='primary']");
+
+				if (acceptBtn) {
+					await acceptBtn.click();
+				}
+
 				const html = await page.content();
 				const $ = cheerio.load(html);
 
-				const elements = $('div.ag-center-cols-container div[role="row"]');
+				const elements = $('div.MuiDataGrid-virtualScrollerRenderZone div.MuiDataGrid-row');
 
 				for (let item of elements) {
-					let mmsi = $(item).find('div[col-id="mmsi"] div div').text();
-					let latestTime = $(item).find('div[col-id="time_of_latest_position"] div').text().slice(0, 16);
-					let latitude = $(item).find('div[col-id="lat_of_latest_position"] div div').text();
-					let longitude = $(item).find('div[col-id="lon_of_latest_position"] div div').text();
-					let course = $(item).find('div[col-id="course"] div div').text().split(' ')[0];
+					let mmsi = $(item).find('div[data-field="mmsi"] div').text().trim();
+					let latestTime = $(item).find('div[data-field="time_of_latest_position"] div').text().trim().slice(0, 16);
+					let latitude = $(item).find('div[data-field="lat_of_latest_position"] div').text().trim();
+					let longitude = $(item).find('div[data-field="lon_of_latest_position"] div').text().trim();
+					let course = $(item).find('div[data-field="course"] div').text().trim().split(' ')[0];
 					let latestTimeDays = dayjs(`${latestTime} UTC`);
 
 					const positionData = {
 						mmsi: Number(mmsi),
 						latestTime: new Date(latestTimeDays.toISOString()),
-						course: Number(course),
+						course: Number.isNaN(Number(course)) ? 0 : Number(course),
 						latitude,
 						longitude,
 					}

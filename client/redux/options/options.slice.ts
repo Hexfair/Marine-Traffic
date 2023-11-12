@@ -1,6 +1,7 @@
 import { FiltersByTime, FiltersByType } from '@/components/FilterBlock/FilterBlock.interfaces';
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
+import { FILTER_BY_TYPE } from '@/components/FilterBlock/FilterBlock.constants';
 //===========================================================================================================
 
 export interface OptionsSliceData {
@@ -18,7 +19,7 @@ export interface OptionsSliceData {
 const initialState: OptionsSliceData = {
 	shipFilter: {
 		byTime: 'day',
-		byType: ['Attack Submarines', 'Ballistic Missile Submarines', 'Guided Missile Destroyers', 'Guided Missile Submarines', 'Saildrone Voyager', 'Aircraft Carriers', 'Guided Missile Cruisers']
+		byType: FILTER_BY_TYPE
 	},
 	positionFilter: {
 		byTime: [],
